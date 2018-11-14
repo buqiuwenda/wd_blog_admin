@@ -6,16 +6,13 @@ use Illuminate\Http\Request;
 
 class ResetController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    protected $pageSizes = [
+        25,50,100,200,500
+    ];
+
     public function __construct()
     {
         $this->middleware('auth');
     }
-
-
 
 }
