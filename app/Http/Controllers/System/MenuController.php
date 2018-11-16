@@ -147,7 +147,17 @@ class MenuController extends ResetController
 
     public function destroy($id)
     {
-        
+        $row = Menu::query()->find($id);
+        if(empty($row)){
+            abort(404);
+        }
+
+        $id = Menu::query()->where('id', '=', $id)->delete();
+        if(!$id){
+            return back()->withErrors(['msg' => '删除失败']);
+        }
+
+        return redirect()->route('menu.index');
     }
 
 
