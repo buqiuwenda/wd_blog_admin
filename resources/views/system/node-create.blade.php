@@ -13,16 +13,16 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>新增菜单 <small> <span class="text-danger">[*]</span>为必填项</small></h5>
+                    <h5>新增节点 <small> <span class="text-danger">[*]</span>为必填项</small></h5>
                 </div>
                 @include('errors.error')
                 <div class="ibox-content">
-                    <form method="post" class="form-horizontal" action="{{ route('menu.store') }}">
+                    <form method="post" class="form-horizontal" action="{{ route('node.store') }}">
                         @csrf
                         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
-                            <label class="col-sm-2 control-label">菜单名 <small class="text-danger">[*]</small></label>
+                            <label class="col-sm-2 control-label">节点名称<small class="text-danger">[*]</small></label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="name" placeholder="菜单名，如：用户管理" value="{{ old('name') }}" maxlength="128">
+                                <input type="text" class="form-control" name="name" placeholder="节点名称，如：用户管理" value="{{ old('name') }}" maxlength="128">
                             </div>
 
                             @if ($errors->has('name'))
@@ -38,9 +38,9 @@
                                 <select name="parent_id" class="form-control m-b">
                                     <option value="">请选择</option>
                                     <option value="0">无</option>
-                                    @if($menus)
-                                    @foreach($menus as $menu)
-                                        <option @if(old('parent_id') == $menu->id) selected @endif value="{{ $menu->id }}">{{ $menu->name }}</option>
+                                    @if($nodes)
+                                    @foreach($nodes as $node)
+                                        <option @if(old('parent_id') == $node->id) selected @endif value="{{ $node->id }}">{{ $node->name }}</option>
                                     @endforeach
                                     @endif
                                 </select>
@@ -54,7 +54,7 @@
                         </div>
 
                         <div class="form-group {{ $errors->has('routing') ? 'has-error' : '' }}">
-                            <label class="col-sm-2 control-label">路由别名 </label>
+                            <label class="col-sm-2 control-label">路由别名 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="routing" placeholder="路由别名，如：member.index" value="{{ old('routing') }}" maxlength="255">
                             </div>
@@ -65,18 +65,30 @@
                                 </span>
                             @endif
                         </div>
-                        <div class="form-group {{ $errors->has('icon_class') ? 'has-error' : '' }}">
-                            <label class="col-sm-2 control-label">菜单图标 </label>
+
+                        <div class="form-group {{ $errors->has('memo') ? 'has-error' : '' }}">
+                            <label class="col-sm-2 control-label">备注 <small class="text-danger">[*]</small> </label>
+                            <div class="col-sm-4"><textarea name="memo" rows="5"  class="form-control "> {{ old('memo') }}</textarea></div>
+                            @if ($errors->has('memo'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('memo') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                            <label class="col-sm-2 control-label">状态 </label>
                             <div class="col-sm-4">
-                                <select name="icon_class" class="form-control m-b">
-                                    <option value="">请选择</option>
-                                    <option value="fa-th-large"> fa-th-large</option>
-                                </select>
+                                @foreach($status as $key =>$state)
+                                <label class="radio-inline">
+                                    <input type="radio" name="status"  @if($key == 'enable') checked @endif value="{{ $key }}"> {{ $state['name'] }}
+                                </label>
+                                 @endforeach
                             </div>
 
-                            @if ($errors->has('icon_class'))
+                            @if ($errors->has('status'))
                                 <span class="help-block">
-                                <strong>{{ $errors->first('icon_class') }}</strong>
+                                <strong>{{ $errors->first('status') }}</strong>
                             </span>
                             @endif
                         </div>

@@ -12,13 +12,13 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>菜单信息</h5>
+                    <h5>节点信息</h5>
                 </div>
                 <div class="ibox-content">
                     <form method="post" class="form-horizontal">
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">菜单名</label>
+                            <label class="col-sm-2 control-label">节点名称</label>
                             <div class="col-sm-4"><p class="form-control-static">{{ $row->name }}</p></div>
                         </div>
 
@@ -34,10 +34,20 @@
                                 <p class="form-control-static">{{ $row->routing}}</p>
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">菜单图标</label>
+                            <label class="col-sm-2 control-label">备注</label>
                             <div class="col-sm-4">
-                                <p class="form-control-static">{{ $row->icon_class }}</p>
+                                <textarea name="memo" rows="5"  class="form-control " readonly> {{ $row->memo }}</textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">节点状态</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static">
+                                    <span><i class="fa fa-circle {{ $status[$row->status]['class'] }}"></i> {{ $status[$row->status]['name'] }}</span>
+                                </p>
                             </div>
                         </div>
 
@@ -60,7 +70,7 @@
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
-                                <a class="btn btn-primary" href="{{ route('menu.edit', $row) }}"><i class="fa fa-edit"></i> 编辑</a>
+                                <a class="btn btn-primary" href="{{ route('node.edit', $row) }}"><i class="fa fa-edit"></i> 编辑</a>
                             </div>
                         </div>
 

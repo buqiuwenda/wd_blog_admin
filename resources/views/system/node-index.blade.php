@@ -7,7 +7,7 @@
 
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>菜单管理 </h5>
+                    <h5>节点管理 </h5>
                     <div class="ibox-tools">
 
                         分页: {{ $rows->perPage() }} / {{ $rows->lastPage() }} / {{ $rows->currentPage() }} 总计: {{ $rows->total() }}
@@ -16,10 +16,10 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-sm-5 m-b-xs">
-                            <a href="{{ route('menu.create') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 新增菜单</a>
+                            <a href="{{ route('node.create') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 新增节点</a>
                         </div>
 
-                            <form action="{{ route('menu.index') }}" method="get">
+                            <form action="{{ route('node.index') }}" method="get">
                                 <div class="col-sm-1">
 
                                     <select class="form-control m-b input-sm"  name="limit" >
@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="input-group">
-                                        <input type="text" placeholder="菜单名" class="input-sm form-control" name="name" value="{{ request('name') }}">
+                                        <input type="text" placeholder="节点名称|路由别名" class="input-sm form-control" name="name" value="{{ request('name') }}">
                                         <span class="input-group-btn">
                                             <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索</button>
                                         </span>
@@ -47,11 +47,11 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>菜单名</th>
+                                <th>节点名称</th>
                                 <th>父级菜单</th>
                                 <th>路由别名</th>
+                                <th>节点状态</th>
                                 <th>添加时间</th>
-                                <th>更新时间</th>
                                 <th class="text-right">操作</th>
                             </tr>
                             </thead>
@@ -74,16 +74,14 @@
                                     <td>
                                         {{ $row->routing }}
                                     </td>
+                                    <td>  <span><i class="fa fa-circle {{ $status[$row->status]['class'] }}"></i> {{ $status[$row->status]['name'] }}</span></td>
                                     <td>
                                         {{ $row->created_at }}
                                     </td>
-                                    <td>
-                                        {{ $row->updated_at }}
-                                    </td>
                                     <td class="text-right">
                                         <div class="btn-group">
-                                            <a class="btn-white btn btn-xs" href="{{ route('menu.show', $row) }}"><i class="fa fa-eye"></i> 查看</a>
-                                            <a class="btn-white btn btn-xs" href="{{ route('menu.edit', $row) }}"><i class="fa fa-edit"></i> 编辑</a>
+                                            <a class="btn-white btn btn-xs" href="{{ route('node.show', $row) }}"><i class="fa fa-eye"></i> 查看</a>
+                                            <a class="btn-white btn btn-xs" href="{{ route('node.edit', $row) }}"><i class="fa fa-edit"></i> 编辑</a>
                                         </div>
                                     </td>
                                 </tr>
