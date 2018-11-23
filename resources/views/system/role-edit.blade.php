@@ -138,7 +138,7 @@
             };
 
             getDatas();
-            var data = sessionStorage.getItem('ztreeData');
+            var data = sessionStorage.getItem('ztreeDataEdit');
 
             zTreeObj = $.fn.zTree.init($("#ztree"), setting, JSON.parse(data));
 
@@ -178,7 +178,7 @@
             }
 
             function nodesArray(){
-                var data = sessionStorage.getItem('ztreeData');
+                var data = sessionStorage.getItem('ztreeDataEdit');
                data = JSON.parse(data);
                 var arr = new Array();
                 var i =0;
@@ -210,7 +210,7 @@
                             status:0,
                             node_id:node_id
                         },function(data){
-                            sessionStorage.setItem('ztreeData',JSON.stringify(data));
+                            sessionStorage.setItem('ztreeDataEdit',JSON.stringify(data));
                         }
                     );
             }

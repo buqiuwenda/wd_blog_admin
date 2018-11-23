@@ -40,6 +40,19 @@ class RoleController extends ResetController
 
     public function show($id)
     {
+        $row = Role::query()->with('nodes')->find($id);
+        if(empty($row)){
+            abort(404);
+        }
+
+        $node_ids = [];
+
+        $nodes = $row->getRelation('nodes');
+        foreach($nodes->toArray() as $val){
+            $node_ids[] = $val['id'];
+        }
+
+        return view('system.role-show')->with(['row' => $row, 'node_ids' => implode(',',$node_ids), 'status' => $this->ableStatus]);
 
     }
 
