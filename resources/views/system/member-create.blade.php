@@ -33,7 +33,7 @@
                         </div>
 
                         <div class="form-group {{ $errors->has('nickname') ? 'has-error' : '' }}">
-                            <label class="col-sm-2 control-label">昵称 </label>
+                            <label class="col-sm-2 control-label">昵称 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-4">
                                 <input type="text" class="form-control" name="nickname" placeholder="昵称，如：zhangsan" value="{{ old('nickname') }}" maxlength="255">
                             </div>
@@ -46,7 +46,7 @@
                         </div>
 
                         <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
-                            <label class="col-sm-2 control-label">电子邮箱 </label>
+                            <label class="col-sm-2 control-label">电子邮箱 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-4">
                                 <input type="email" class="form-control" name="email" placeholder="电子邮箱，如：abc@163.com" value="{{ old('email') }}" maxlength="255">
                             </div>
@@ -58,7 +58,7 @@
                             @endif
                         </div>
                         <div class="form-group {{ $errors->has('password') ? 'has-error' : '' }}">
-                            <label class="col-sm-2 control-label">密码 </label>
+                            <label class="col-sm-2 control-label">密码 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-4">
                                 <input type="password" class="form-control" name="password" placeholder="密码，如：abc123456" value="{{ old('password') }}" maxlength="16">
                             </div>
@@ -71,7 +71,7 @@
                         </div>
 
                         <div class="form-group" >
-                            <label class="col-sm-2 control-label">确认密码 </label>
+                            <label class="col-sm-2 control-label">确认密码 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-4">
                               <input type="password" class="form-control" name="password_confirmation" placeholder="确认密码，如：abc123456" required="">
                             </div>
@@ -98,7 +98,7 @@
                         </div>
 
                         <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                            <label class="col-sm-2 control-label">状态 </label>
+                            <label class="col-sm-2 control-label">状态 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-4">
                                 @foreach($status as $key =>$state)
                                     <label class="radio-inline">

@@ -32,4 +32,11 @@ class Node  extends Model
 
     ];
 
+
+    public function roles()
+    {
+        return $this->morphToMany(Role::class, 'rbac_roleable');
+    }
+
+
 }

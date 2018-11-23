@@ -21,7 +21,7 @@
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-    @yield('head')
+    @yield('header')
 
 </head>
 

@@ -49,6 +49,23 @@ Route::group([
         Route::put('nodes/{id}','NodeController@update')->name('node.update');
         Route::delete('nodes/{id}', 'NodeController@destroy')->name('node.destroy');
 
+        // 用户管理
+        Route::get('members', 'MemberController@index')->name('member.index');
+        Route::get('members/create', 'MemberController@create')->name('member.create');
+        Route::post('members', 'MemberController@store')->name('member.store');
+        Route::get('members/{id}', 'MemberController@show')->name('member.show');
+        Route::get('members/{id}/edit', 'MemberController@edit')->name('member.edit');
+        Route::put('members/{id}','MemberController@update')->name('member.update');
+
+        // 角色管理
+        Route::get('roles', 'RoleController@index')->name('role.index');
+        Route::get('roles/create', 'RoleController@create')->name('role.create');
+        Route::post('roles', 'RoleController@store')->name('role.store');
+        Route::get('roles/{id}', 'RoleController@show')->name('role.show');
+        Route::get('roles/{id}/edit', 'RoleController@edit')->name('role.edit');
+        Route::put('roles/{id}','RoleController@update')->name('role.update');
+//        Route::delete('roles/{id}', 'RoleController@destroy')->name('role.destroy');
+
     });
 });
 

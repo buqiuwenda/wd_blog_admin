@@ -22,6 +22,7 @@ class Role  extends Model
 
     protected $fillable = [
         'name',
+        'alias',
         'meta_description',
         'status',
         'created_at',
@@ -29,5 +30,19 @@ class Role  extends Model
         'deleted_at'
 
     ];
+
+
+    public function members()
+    {
+        return $this->morphedByMany(Member::class, 'rbac_roleable');
+    }
+
+
+    public function nodes()
+    {
+        return $this->morphedByMany(Node::class, 'rbac_roleable');
+    }
+
+
 
 }
