@@ -24,10 +24,19 @@ class Node  extends Model
         'name',
         'parent_id',
         'routing',
+        'memo',
+        'status',
         'created_at',
         'updated_at',
         'deleted_at'
 
     ];
+
+
+    public function roles()
+    {
+        return $this->morphToMany(Role::class, 'rbac_roleable');
+    }
+
 
 }

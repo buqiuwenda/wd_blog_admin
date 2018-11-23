@@ -15,7 +15,7 @@ class Member extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','avatar','status','created_at','updated_at'
+        'name','nickname', 'email', 'confirm_code','password','avatar','status','created_at','updated_at'
     ];
 
     /**
@@ -26,4 +26,12 @@ class Member extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function roles()
+    {
+        return $this->morphToMany(Role::class, 'rbac_roleable');
+    }
+
+
 }

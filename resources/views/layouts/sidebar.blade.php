@@ -24,10 +24,13 @@
                     <li><a href="{{Route('home')}}">Dashboard</a></li>
                 </ul>
             </li>
-            <li>
+            <li >
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
+                    <li><a href="{{ route('member.index') }}">用户管理</a></li>
                     <li><a href="{{ route('menu.index') }}">菜单管理</a></li>
+                    <li><a href="{{ route('role.index') }}">角色管理</a></li>
+                    <li><a href="{{ route('node.index') }}">节点管理</a></li>
                 </ul>
             </li>
         </ul>

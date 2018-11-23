@@ -8,10 +8,8 @@ I believe it will be better and better. If you are interested in this, you can j
 
 ## Basic Features
   
-- Manage user 
-- articles,discussion
-- admin
-- notification
+- rbac 权限系统
+
 
 
 ## Install
@@ -19,7 +17,7 @@ I believe it will be better and better. If you are interested in this, you can j
 ### 1. Clone the source code .
 
 ```shell
- git clone http://github.com/buqiuwenda/wd_blog.git
+ git clone http://github.com/buqiuwenda/wd_blog_admin.git
 
 ``` 
 
@@ -37,6 +35,8 @@ I believe it will be better and better. If you are interested in this, you can j
 - Mbstring PHP Extension
 - Tokenizer PHP Extension
 - XML PHP Extension
+- Mysql 5.7
+- Nginx 1.10.13
 
 ## License
 
