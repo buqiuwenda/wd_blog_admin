@@ -22,7 +22,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::group([
-    'middleware' => 'auth'
+    'middleware' => ['auth','permission'],
              ], function(){
 
     // 系统管理
