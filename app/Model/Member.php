@@ -8,7 +8,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Member extends Authenticatable
 {
     use Notifiable;
-    const ROOT_ROLE = 'rootAdmin';
 
     /**
      * The attributes that are mass assignable.
@@ -42,9 +41,6 @@ class Member extends Authenticatable
             return false;
         }
 
-        if($role['alias'] == self::ROOT_ROLE){
-            return true;
-        }
 
         if(is_white_route($route_name)){
             return true;

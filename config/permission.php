@@ -9,5 +9,6 @@ return [
    'white_list' => [
       'api',
       'home'
-   ]
+   ],
+   'root_user' => env('ROOT_USER', 1),
 ];

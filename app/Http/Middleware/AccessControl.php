@@ -21,6 +21,11 @@ class AccessControl
              * @var $member Member
              */
             $member = Auth::guard($guard)->user();
+
+            if($member['id'] === config('permission.root_user')){
+                return $next($request);
+            }
+
             $name = Route::currentRouteName();
 
             $verify = $member->permissionCheck($name);
