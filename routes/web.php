@@ -67,5 +67,38 @@ Route::group([
 //        Route::delete('roles/{id}', 'RoleController@destroy')->name('role.destroy');
 
     });
+
+    // 标签管理
+    Route::group(['namespace' => 'Tag'],function(){
+        Route::get('tags', 'TagController@index')->name('tag.index');
+        Route::get('tags/create', 'TagController@create')->name('tag.create');
+        Route::post('tags', 'TagController@store')->name('tag.store');
+        Route::get('tags/{id}', 'TagController@show')->name('tag.show');
+        Route::get('tags/{id}/edit', 'TagController@edit')->name('tag.edit');
+        Route::put('tags/{id}','TagController@update')->name('tag.update');
+        Route::delete('tags/{id}', 'TagController@destroy')->name('tag.destroy');
+
+    });
+
+    // 类别管理
+    Route::group(['namespace' => 'Category'],function(){
+        Route::get('category', 'CategoryController@index')->name('category.index');
+        Route::get('category/create', 'CategoryController@create')->name('category.create');
+        Route::post('category', 'CategoryController@store')->name('category.store');
+        Route::get('category/{id}', 'CategoryController@show')->name('category.show');
+        Route::get('category/{id}/edit', 'CategoryController@edit')->name('category.edit');
+        Route::put('category/{id}','CategoryController@update')->name('category.update');
+        Route::delete('category/{id}', 'CategoryController@destroy')->name('category.destroy');
+
+    });
+
+    // 用户管理
+    Route::group(['namespace' => 'User'], function(){
+        Route::get('users', 'UserController@index')->name('user.index');
+        Route::get('users/{id}', 'UserController@show')->name('user.show');
+        Route::get('users/{id}/edit', 'UserController@edit')->name('user.edit');
+        Route::put('users/{id}','UserController@update')->name('user.update');
+    });
+
 });
 

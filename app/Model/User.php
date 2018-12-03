@@ -8,23 +8,24 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Tag  extends Model
+class User  extends Model
 {
-    use SoftDeletes;
-
-    protected $dates = [
-        'deleted_at'
+    protected $hidden = [
+        'password', 'remember_token',
     ];
 
     protected $fillable = [
-        'tag',
-        'title',
-        'meta_description',
+        'name',
+        'nickname',
+        'avatar',
+        'email',
+        'confirm_code',
+        'password',
+        'remember_token',
+        'status',
         'created_at',
         'updated_at',
-        'deleted_at'
     ];
 
 

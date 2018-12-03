@@ -22,7 +22,7 @@ class AccessControl
              */
             $member = Auth::guard($guard)->user();
 
-            if($member['id'] === config('permission.root_user')){
+            if($member['id'] == config('permission.root_user')){
                 return $next($request);
             }
 

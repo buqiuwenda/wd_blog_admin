@@ -14,6 +14,8 @@ class Category  extends Model
 {
     use SoftDeletes;
 
+    protected $table = 'categorys';
+
     protected $dates = [
         'deleted_at'
     ];
@@ -23,7 +25,7 @@ class Category  extends Model
         'name',
         'path',
         'description',
-        'image_url',
+        'level',
         'created_at',
         'updated_at',
         'deleted_at'
