@@ -100,5 +100,15 @@ Route::group([
         Route::put('users/{id}','UserController@update')->name('user.update');
     });
 
+    // 文章管理
+    Route::group(['namespace' => 'Article'], function(){
+        Route::get('articles', 'ArticleController@index')->name('article.index');
+        Route::get('articles/create', 'ArticleController@create')->name('article.create');
+        Route::post('articles', 'ArticleController@store')->name('article.store');
+        Route::get('articles/{id}', 'ArticleController@show')->name('article.show');
+        Route::get('articles/{id}/edit', 'ArticleController@edit')->name('article.edit');
+        Route::put('articles/{id}','ArticleController@update')->name('article.update');
+    });
+
 });
 

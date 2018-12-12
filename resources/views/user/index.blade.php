@@ -15,7 +15,7 @@
                 </div>
                 <div class="ibox-content">
                     <div class="row">
-                            <form action="{{ route('tag.index') }}" method="get">
+                            <form action="{{ route('user.index') }}" method="get">
                                 <div class="col-sm-2">
 
                                     <select class="form-control m-b input-sm"  name="limit" >

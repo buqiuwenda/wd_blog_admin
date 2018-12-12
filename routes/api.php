@@ -21,4 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['namespace' => 'Api'],function(){
 
     Route::get('nodes/tree', 'NodeController@getTreeNodes')->name('node.treeList');
+
+    Route::post('image/uploads', 'UploadFileController@uploadImage')->name('image.upload');
+
+    Route::post('file/deletes', 'UploadFileController@deleteFile')->name('file.delete');
 });

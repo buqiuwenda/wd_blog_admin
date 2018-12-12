@@ -38,6 +38,8 @@ class Article  extends Model
 
     ];
 
-
-
+    public function tags()
+    {
+        return $this->morphMany(Tag::class,'taggable');
+    }
 }

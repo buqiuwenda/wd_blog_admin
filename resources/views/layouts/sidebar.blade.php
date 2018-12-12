@@ -43,6 +43,12 @@
                 </ul>
             </li>
             <li>
+                <a href="#"><i class="fa fa-book"></i> <span class="nav-label">文章管理</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{{ route('article.index') }}">文章列表</a></li>
+                </ul>
+            </li>
+            <li>
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li><a href="{{ route('member.index') }}">系统用户</a></li>
