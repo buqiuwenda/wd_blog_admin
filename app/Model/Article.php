@@ -7,8 +7,11 @@
  */
 namespace App\Model;
 
+use App\Tools\Markdowner;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Log;
+use App\Tools\Translate\YouDao;
 
 class Article  extends Model
 {
@@ -32,6 +35,7 @@ class Article  extends Model
         'is_draft',
         'view_count',
         'published_at',
+        'status',
         'created_at',
         'updated_at',
         'deleted_at'
@@ -40,6 +44,44 @@ class Article  extends Model
 
     public function tags()
     {
-        return $this->morphMany(Tag::class,'taggable');
+        return $this->morphToMany(Tag::class,'taggable');
     }
+
+
+
+    public function setTitleAttribute($value)
+    {
+        $this->attributes['title'] = $value;
+        $youDao = new YouDao();
+        $en_value = $youDao->translate($value);
+
+        $this->setUniqueSlug($en_value, str_random(5));
+    }
+
+
+    public function setUniqueSlug($value, $extra)
+    {
+        $slug = str_slug($value.'-'.$extra);
+
+        $info = $this->query()->where('slug', '=', $slug)->first();
+
+        if($info){
+            $this->setUniqueSlug($slug, (int) $extra + 1);
+            return ;
+        }
+
+        $this->attributes['slug'] = $slug;
+    }
+
+
+    public function setContentAttribute($value)
+    {
+        $content = [
+           'raw' => $value,
+           'html' => (new Markdowner())->convertMarkdownToHtml($value)
+        ];
+
+        $this->attributes['content'] = json_encode($content);
+    }
+
 }

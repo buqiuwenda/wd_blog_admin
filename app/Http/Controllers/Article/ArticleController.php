@@ -61,11 +61,44 @@ class ArticleController extends  ResetController
     {
         return view('article.create')->with(['members' => $this->getList('member'),
                                                 'categorys' => $this->getList(),
-                                                'tag' => $this->getTagList()]);
+                                                'tags' => $this->getTagList()]);
     }
 
     public function store(Request $request)
     {
+       $this->validate($request, [
+           'title' => 'required|string|max:255|unique:articles',
+           'subtitle' => 'required|string|max:255|unique:articles',
+           'page_image' => 'required|url|max:255',
+           'category_id' => 'required|min:1',
+           'meta_description' => 'required|string|max:255',
+           'content' => 'required|string',
+           'tags' => 'required',
+           'published_at' => 'required|date',
+           'is_original' => 'required|string|in:on,off',
+           'is_draft' => 'required|string|in:on,off',
+           'status' => 'required|string|in:on,off',
+       ]);
+
+       $params = $request->all();
+
+       $params['member_id'] = \Auth::id();
+       $params['last_member_id'] = \Auth::id();
+
+       $params['is_original'] = str_replace(['on', 'off'], [1,0], $params['is_original']);
+       $params['is_draft'] = str_replace(['on', 'off'], [1,0], $params['is_draft']);
+       $params['status'] = str_replace(['on', 'off'], [1,0], $params['status']);
+
+       $model = new Article();
+       $model->fill($params);
+       $id = $model->save();
+
+       if($id){
+           $model->tags()->sync($params['tags']);
+           return redirect()->route('article.index');
+       }else{
+           return back()->withErrors(['msg' => '创建失败']);
+       }
 
     }
 

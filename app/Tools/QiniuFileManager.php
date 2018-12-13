@@ -23,12 +23,12 @@ class QiniuFileManager
 
     public function __construct()
     {
-        $this->access_key = env('QINIU_ACCESS_KEY', '');
-        $this->secret_key = env('QINIU_SECRET_KEY', '');
-        $this->bucket = env('QINIU_BUCKET','');
-        $this->domain = env('QINIU_DOMAIN', '');
+        $this->access_key = config('services.qiniu.access_key');
+        $this->secret_key = config('services.qiniu.secret_key');
+        $this->bucket = config('services.qiniu.bucket');
+        $this->domain = config('services.qiniu.domain');
 
-        if(!$this->access_key || !$this->secret_key || !$this->bucket || !$this->domain){
+        if(!$this->access_key || !$this->secret_key || !$this->bucket){
             throw new Exception('qiniu config can not empty');
         }
     }

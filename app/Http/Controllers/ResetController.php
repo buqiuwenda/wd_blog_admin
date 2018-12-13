@@ -74,5 +74,4 @@ class ResetController extends Controller
         return $data;
     }
 
-
 }

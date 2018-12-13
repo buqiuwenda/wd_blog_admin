@@ -39,7 +39,7 @@ class UploadFileController extends Controller
 
         $file = new File($request->file('image'));
 
-        $path = $strategy .'/'.date('Y').'/'.date('m').'/'.date('d');
+        $path = $strategy .'/'.date('Y-m-d');
 
         $result = $this->manager->uploadFile($file, $path);
 

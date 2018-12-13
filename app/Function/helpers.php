@@ -4,6 +4,7 @@
  * Author:huangzhongxi@rockfintech.com
  * Date: 2018/11/30 4:37 PM
  */
+use Illuminate\Support\Str;
 
 if(!function_exists('is_white_route')){
     function is_white_route($route){
@@ -59,5 +60,35 @@ if(!function_exists('human_filesize')) {
         $floor = floor((strlen($bytes)-1)/3);
 
         return sprintf("%.{$decimals}f", $bytes/pow(1024, $floor)).@$size[$floor];
+    }
+}
+
+if (! function_exists('str_slug')) {
+    /**
+     * Generate a URL friendly "slug" from a given string.
+     *
+     * @param  string  $title
+     * @param  string  $separator
+     * @param  string  $language
+     * @return string
+     */
+    function str_slug($title, $separator = '-', $language = 'en')
+    {
+        return Str::slug($title, $separator, $language);
+    }
+}
+
+if (! function_exists('str_random')) {
+    /**
+     * Generate a more truly "random" alpha-numeric string.
+     *
+     * @param  int  $length
+     * @return string
+     *
+     * @throws \RuntimeException
+     */
+    function str_random($length = 16)
+    {
+        return Str::random($length);
     }
 }

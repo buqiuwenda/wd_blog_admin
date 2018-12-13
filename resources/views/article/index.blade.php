@@ -70,13 +70,13 @@
                                        {{ $row->subtitle }}
                                     </td>
                                     <td>
-                                        {{ $row->category_id }}
+                                        {{ $categorys[$row->category_id] }}
                                     </td>
                                     <td>
-                                        {{ $row->member_id }}
+                                        {{ $members[$row->member_id] }}
                                     </td>
                                     <td>
-                                        {{ $row->last_member_id }}
+                                        {{ $members[$row->last_member_id] }}
                                     </td>
                                     <td>
                                         @if($row->is_original == 1)

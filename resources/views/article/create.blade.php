@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
     <link href="{{ asset('css/plugins/bootstrap-fileinput/themes/explorer-fas/theme.css') }}" rel="stylesheet">
     <link href="{{ asset('css/plugins/bootstrap-markdown/bootstrap-markdown.min.css') }}" rel="stylesheet">
+    <link href="{{asset('css/plugins/datepicker/datepicker3.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/switchery/switchery.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/select2/select2.min.css')}}" rel="stylesheet">
 
 
 @endsection
@@ -103,7 +106,42 @@
                             </div>
 
                         </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">标签 <small class="text-danger">[*]</small></label>
+                            <div class="col-sm-6">
+                                <select class="select2_tag form-control" name="tags[]">
+                                    @if($tags)
+                                        @foreach($tags as $key=>$name)
+                                            <option  value="{{ $key }}">{{ $name }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
 
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">发布时间 <small class="text-danger">[*]</small></label>
+                            <div class="col-sm-4">
+                                <div class="input-group date ">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="published_at" class="form-control" value="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">是否原创 <small class="text-danger">[*]</small></label>
+                            <div class="col-sm-2">
+                                <input type="checkbox" name="is_original" class="js-switch"   />
+                            </div>
+                            <label class="col-sm-2 control-label">是否草稿 <small class="text-danger">[*]</small></label>
+                            <div class="col-sm-2">
+                                <input type="checkbox" name="is_draft" class="js-switch2"   />
+                            </div>
+
+                            <label class="col-sm-1 control-label">状态 <small class="text-danger">[*]</small></label>
+                            <div class="col-sm-2">
+                                <input type="checkbox" name="status" class="js-switch3"  checked />
+                            </div>
+                        </div>
 
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
@@ -130,8 +168,12 @@
     <script src="{{ asset('js/plugins/bootstrap-fileinput/locales/zh.js') }}"></script>
     <script src="{{ asset('js/plugins/bootstrap-markdown/bootstrap-markdown.js') }}"></script>
     <script src="{{ asset('js/plugins/bootstrap-markdown/markdown.js') }}"></script>
-    <script src="{{ asset('js/plugins/bootstrap-markdown/locales/zh.js') }}"></script>
+    <script src="{{ asset('js/plugins/bootstrap-markdown/locales/bootstrap-markdown.zh.js') }}"></script>
     <script src="{{ asset('css/plugins/bootstrap-fileinput/themes/explorer-fas/theme.js') }}"></script>
+    <script src="{{ asset('js/plugins/switchery/switchery.js') }}"></script>
+    <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
+
     <script>
         $(document).ready(function () {
             $('.i-checks').iCheck({
@@ -152,13 +194,51 @@
                 maxFilesNum: 1,
                 overwriteInitial: false
 
+            }).on('fileuploaded',function(event,data, previewId, index){
+                 var response = data.response;
+                 if(response) {
+                     var hiddenInput = "<input name='page_image' type='hidden' value=" + response.url + ">";
+
+                     $(this).append(hiddenInput);
+                 }
             });
+
+
 
             $("#some-textarea").markdown({
                 language:'zh',
                 autofocus:false,
                 savable:false
             });
+
+            $('.input-group.date').datepicker({
+                todayBtn: "linked",
+                keyboardNavigation: false,
+                forceParse: false,
+                calendarWeeks: true,
+                autoclose: true,
+                format: 'yyyy-mm-dd',
+                todayHighlight: true
+            });
+
+
+            var elem = document.querySelector('.js-switch');
+            var switchery = new Switchery(elem, { color: '#1AB394' });
+
+            var elem2 = document.querySelector('.js-switch2');
+            var switchery2 = new Switchery(elem2, { color: '#1AB394' });
+
+            var elem3 = document.querySelector('.js-switch3');
+            var switchery3 = new Switchery(elem3, { color: '#1AB394' });
+
+            $(".select2_tag").select2({
+                placeholder: "选择标签",
+                allowClear: true,
+                multiple:true,
+                closeOnSelect: true,
+                maximumSelectionLength:5
+            });
+
         });
     </script>
 
