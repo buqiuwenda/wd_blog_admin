@@ -51,12 +51,12 @@ class UploadFileController extends Controller
     public function deleteFile(Request $request)
     {
         $this->validate($request, [
-            'path' => 'required|url|max:255'
+            'key' => 'required|string|max:255'
         ]);
 
-        $path = $request->all()['path'];
+        $key = $request->all()['key'];
 
-        $result = $this->manager->deleteFile($path);
+        $result = $this->manager->deleteFile($key);
 
         return $result;
     }

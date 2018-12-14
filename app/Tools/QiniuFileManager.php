@@ -21,6 +21,7 @@ class QiniuFileManager
     protected $bucket;
     protected $domain;
 
+
     public function __construct()
     {
         $this->access_key = config('services.qiniu.access_key');
@@ -63,15 +64,14 @@ class QiniuFileManager
               'size' => human_filesize($file->getSize()),
               'real_path' => $ret['key'],
               'relative_url' => "storage/".$ret['key'],
-              'url' => $this->domain.$ret['key']
+              'url' => $this->domain.'/'.$ret['key']
            ];
         }
     }
 
 
-    public function deleteFile($path)
+    public function deleteFile($key)
     {
-        $key = str_replace($this->domain, '', $path);
 
         $auth = new Auth($this->access_key, $this->secret_key);
 
@@ -90,6 +90,32 @@ class QiniuFileManager
             return [
                 'status' => '1',
                 'msg'  => '删除成功'
+            ];
+        }
+    }
+
+
+    public function getFileInfo($key)
+    {
+        $auth = new Auth($this->access_key, $this->secret_key);
+        $config = new \Qiniu\Config();
+
+        $bucketManager = new BucketManager($auth, $config);
+        list($fileInfo, $err) = $bucketManager->stat($this->bucket, $key);
+        if($err){
+            return [
+              'status' => 0,
+              'msg' => $err
+            ];
+        }else{
+            $extension = str_replace('image\/', '', $fileInfo['mimeType']);
+
+            $fileInfo['name'] = $fileInfo['hash'].'.'.$extension;
+            $fileInfo['url'] = $this->domain.'/'.$key;
+
+            return [
+               'status'=> 1,
+               'info' => $fileInfo
             ];
         }
     }

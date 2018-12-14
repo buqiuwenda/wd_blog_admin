@@ -21,16 +21,16 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>新增文章 <small> <span class="text-danger">[*]</span>为必填项</small></h5>
+                    <h5>编辑文章 <small> <span class="text-danger">[*]</span>为必填项</small></h5>
                 </div>
                 @include('errors.error')
                 <div class="ibox-content">
-                    <form method="post" class="form-horizontal" action="{{ route('article.store') }}" enctype="multipart/form-data">
+                    <form method="post" class="form-horizontal" action="{{ route('article.update', $row) }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                             <label class="col-sm-2 control-label">标题 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="title" placeholder="标题 ，如：你是一部怎样的车" value="{{ old('title') }}" maxlength="255">
+                                <input type="text" class="form-control" name="title" placeholder="" value="@if(old('title')) {{ old('title') }} @else {{ $row->title }} @endif" maxlength="255">
                             </div>
 
                             @if ($errors->has('title'))
@@ -44,7 +44,7 @@
                         <div class="form-group {{ $errors->has('subtitle') ? 'has-error' : '' }}">
                             <label class="col-sm-2 control-label">子标题 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="subtitle" placeholder="子标题" value="{{ old('subtitle') }}" maxlength="255">
+                                <input type="text" class="form-control" name="subtitle" placeholder="子标题" value="@if(old('title')) {{ old('subtitle') }} @else {{ $row->subtitle }}  @endif" maxlength="255">
                             </div>
 
                             @if ($errors->has('subtitle'))
@@ -60,7 +60,7 @@
                                     <option value="">请选择</option>
                                     @if($categorys)
                                         @foreach($categorys as $key=>$name)
-                                            <option @if(old('category_id') == $key) selected @endif value="{{ $key }}">{{ $name }}</option>
+                                            <option @if(old('category_id') == $key || $row->category_id == $key) selected @endif value="{{ $key }}">{{ $name }}</option>
                                         @endforeach
                                     @else
                                         <option value="0">无</option>
@@ -88,7 +88,7 @@
                         <div class="form-group {{ $errors->has('meta_description') ? 'has-error' : '' }}">
                             <label class="col-sm-2 control-label"> 简述 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="meta_description" placeholder="描述" value="{{ old('meta_description') }}" maxlength="255">
+                                <input type="text" class="form-control" name="meta_description" placeholder="描述" value="@if(old('meta_description')) {{ old('meta_description') }} @else {{ $row->meta_description }} @endif" maxlength="255">
                             </div>
 
                             @if ($errors->has('meta_description'))
@@ -102,17 +102,17 @@
                         <div class="form-group ">
                             <label class="col-sm-2 control-label"> 文章内容<small class="text-danger">[*]</small> </label>
                             <div class="col-sm-8">
-                                <textarea name="content"  data-provide="markdown" rows="10"></textarea>
+                                <textarea name="content"  data-provide="markdown" rows="10">{{ $content }}</textarea>
                             </div>
 
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">标签 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-6">
-                                <select class="select2_tag form-control" name="tags[]">
+                                <select class="select2_tag form-control" name="tags[]" multiple="multiple" >
                                     @if($tags)
                                         @foreach($tags as $key=>$name)
-                                            <option  value="{{ $key }}">{{ $name }}</option>
+                                            <option  value="{{ $key }}" @if(in_array($key, $tagData)) selected="selected"  @endif>{{ $name }}</option>
                                         @endforeach
                                     @endif
                                 </select>
@@ -123,23 +123,23 @@
                             <label class="col-sm-2 control-label">发布时间 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-4">
                                 <div class="input-group date ">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="published_at" class="form-control" value="">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="published_at" class="form-control" value="@if(old('published_at')) {{ old('published_at') }}  @else {{ $row->published_at }} @endif">
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">是否原创 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-2">
-                                <input type="checkbox" name="is_original" class="js-switch"   />
+                                <input type="checkbox" name="is_original" class="js-switch"  @if($row->is_original) checked @endif />
                             </div>
                             <label class="col-sm-2 control-label">是否草稿 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-2">
-                                <input type="checkbox" name="is_draft" class="js-switch2"   />
+                                <input type="checkbox" name="is_draft" class="js-switch2"  @if($row->is_draft) checked @endif  />
                             </div>
 
                             <label class="col-sm-1 control-label">状态 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-2">
-                                <input type="checkbox" name="status" class="js-switch3"  checked />
+                                <input type="checkbox" name="status" class="js-switch3"   @if($row->status) checked @endif />
                             </div>
                         </div>
 
@@ -183,6 +183,11 @@
 
 
             var uploadUrl = "{{ route('image.upload') }}";
+            var deleteUrl = "{{ route('file.delete') }}";
+            var fileKey = "{{ $row->page_image }}";
+
+            var fileInfo = '<?php echo $fileInfo; ?>';
+            var fileInfoJson = JSON.parse(fileInfo);
 
             $("#image").fileinput({
                 'language':'zh',
@@ -192,24 +197,33 @@
                 'elErrorContainer': '#errorBlock',
                 maxFileSize: 2048,
                 maxFilesNum: 1,
-                overwriteInitial: false
+                overwriteInitial: false,
+                initialPreviewAsData:true,
+                initialPreview: [
+                    fileInfoJson.url
+                ],
+                initialPreviewConfig: [
+                    {caption: fileInfoJson.name, size: fileInfoJson.fsize, width: "120px", url: "{$url}", key: 1}
+                ],
+                deleteUrl:deleteUrl,
+                deleteExtraData:{ 'key':fileKey}
+
 
             }).on('fileuploaded',function(event,data, previewId, index){
                  var response = data.response;
                  if(response) {
-                     var hiddenInput = "<input name='page_image' type='hidden' value=" + response.real_path + ">";
+                     var hiddenInput = "<input name='page_image' type='hidden' value=" + response.url + ">";
 
                      $(this).append(hiddenInput);
                  }
             });
-
-
 
             $("#some-textarea").markdown({
                 language:'zh',
                 autofocus:false,
                 savable:false
             });
+
 
             $('.input-group.date').datepicker({
                 todayBtn: "linked",
@@ -230,6 +244,7 @@
 
             var elem3 = document.querySelector('.js-switch3');
             var switchery3 = new Switchery(elem3, { color: '#1AB394' });
+
 
             $(".select2_tag").select2({
                 placeholder: "选择标签",

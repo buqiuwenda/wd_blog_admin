@@ -15,7 +15,7 @@
                 </div>
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-sm-5 m-b-xs">
+                        <div class="col-sm-2 m-b-xs">
                             <a href="{{ route('article.create') }}" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> 新增文章</a>
                         </div>
                             <form action="{{ route('article.index') }}" method="get">
@@ -28,7 +28,38 @@
                                     </select>
 
                                 </div>
-                                <div class="col-sm-6">
+
+                                <div class="col-sm-2">
+
+                                    <select class="form-control m-b input-sm"  name="category_id" >
+                                        <option value="">类别</option>
+                                        @foreach($categorys as $key=>$val)
+                                            <option value="{{$val}}" @if(request('category_id') == $val) selected @endif> {{$val}}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                                <div class="col-sm-2">
+
+                                    <select class="form-control m-b input-sm"  name="member_id" >
+                                        <option value="">发表人</option>
+                                        @foreach($members as $key=>$val)
+                                            <option value="{{$val}}" @if(request('member_id') == $val) selected @endif> {{$val}}</option>
+                                        @endforeach
+                                    </select>
+
+                                </div>
+                                <div class="col-sm-2">
+
+                                    <select class="form-control m-b input-sm"  name="status" >
+                                        <option value="">状态</option>
+                                        <option value="1">启用</option>
+                                        <option value="0">禁用</option>
+
+                                    </select>
+
+                                </div>
+                                <div class="col-sm-3">
                                     <div class="input-group">
                                         <input type="text" placeholder="标题|子标题" class="input-sm form-control" name="keyword" value="{{ request('keyword') }}">
                                         <span class="input-group-btn">

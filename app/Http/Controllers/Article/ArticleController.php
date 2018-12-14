@@ -10,6 +10,7 @@ namespace App\Http\Controllers\Article;
 use App\Http\Controllers\ResetController;
 use Illuminate\Http\Request;
 use App\Model\Article;
+use App\Tools\QiniuFileManager;
 
 class ArticleController extends  ResetController
 {
@@ -105,7 +106,38 @@ class ArticleController extends  ResetController
 
     public function edit($id)
     {
+        $row = Article::query()->with('tags')->find($id);
+        if(empty($row)){
+            abort(404);
+        }
 
+        $qiniu = new QiniuFileManager();
+
+        $fileInfo = $qiniu->getFileInfo($row['page_image']);
+        if($fileInfo['status'] ==1 ){
+            $files = json_encode($fileInfo['info']);
+        }else{
+            $files = '';
+        }
+        $tags = $row->getRelation('tags');
+
+        $tagData = [];
+
+        if($tags){
+            foreach($tags->toArray() as $val){
+               $tagData[] = $val['id'];
+            }
+        }
+
+        $content = json_decode($row['content'], true);
+
+        return view('article.edit')->with(['row' => $row,
+                                           'members' => $this->getList('member'),
+                                           'categorys' => $this->getList(),
+                                            'fileInfo' => $files,
+                                           'tags' => $this->getTagList(),
+                                              'tagData' => $tagData,
+                                              'content' => $content['raw']]);
     }
 
     public function update(Request $request , $id)
