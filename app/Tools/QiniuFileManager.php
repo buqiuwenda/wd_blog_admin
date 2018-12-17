@@ -21,6 +21,13 @@ class QiniuFileManager
     protected $bucket;
     protected $domain;
 
+    protected $mimeType = [
+       'image/jpeg' => 'jpeg',
+       'image/jpg' => 'jpg',
+       'image/png' => 'png',
+       'image/gif' => 'gif',
+    ];
+
 
     public function __construct()
     {
@@ -108,9 +115,8 @@ class QiniuFileManager
               'msg' => $err
             ];
         }else{
-            $extension = str_replace('image\/', '', $fileInfo['mimeType']);
 
-            $fileInfo['name'] = $fileInfo['hash'].'.'.$extension;
+            $fileInfo['name'] = $fileInfo['hash'].'.'.$this->mimeType[$fileInfo['mimeType']];
             $fileInfo['url'] = $this->domain.'/'.$key;
 
             return [

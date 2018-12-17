@@ -11,6 +11,7 @@ use App\Http\Controllers\ResetController;
 use Illuminate\Http\Request;
 use App\Model\Article;
 use App\Tools\QiniuFileManager;
+use Illuminate\Validation\Rule;
 
 class ArticleController extends  ResetController
 {
@@ -48,14 +49,40 @@ class ArticleController extends  ResetController
 
     public function show($id)
     {
-        $row = Article::query()->find($id);
+        $row = Article::query()->with('tags')->find($id);
         if(empty($row)){
             abort(404);
         }
 
+        $qiniu = new QiniuFileManager();
+
+        $fileInfo = $qiniu->getFileInfo($row['page_image']);
+        if($fileInfo['status'] ==1 ){
+            $files = json_encode($fileInfo['info']);
+        }else{
+            $files = '';
+        }
+
+        $tags = $row->getRelation('tags');
+
+        $tagData = [];
+
+        if($tags){
+            foreach($tags->toArray() as $val){
+                $tagData[] = $val['id'];
+            }
+        }
+
+        $content = json_decode($row['content'], true);
+
         return view('article.show')->with(['row' => $row,
                                            'members' => $this->getList('member'),
-                                           'categorys' => $this->getList()]);
+                                           'categorys' => $this->getList(),
+                                           'fileInfo' => $files,
+                                           'tags' => $this->getTagList(),
+                                           'tagData' => $tagData,
+                                           'content' => $content['raw']
+                                          ]);
     }
 
     public function create()
@@ -70,7 +97,7 @@ class ArticleController extends  ResetController
        $this->validate($request, [
            'title' => 'required|string|max:255|unique:articles',
            'subtitle' => 'required|string|max:255|unique:articles',
-           'page_image' => 'required|url|max:255',
+           'page_image' => 'required|max:255',
            'category_id' => 'required|min:1',
            'meta_description' => 'required|string|max:255',
            'content' => 'required|string',
@@ -143,6 +170,45 @@ class ArticleController extends  ResetController
     public function update(Request $request , $id)
     {
 
+        $this->validate($request, [
+            'title' =>  'required',
+            Rule::unique('articles')->ignore($id),
+            'max:255',
+            'subtitle' => 'required',
+            Rule::unique('articles')->ignore($id),
+            'max:255',
+            'page_image' => 'required|max:255',
+            'category_id' => 'required|min:1',
+            'meta_description' => 'required|string|max:255',
+            'content' => 'required|string',
+            'tags' => 'required',
+            'published_at' => 'required|date',
+            'is_original' => 'required|string|in:on,off',
+            'is_draft' => 'required|string|in:on,off',
+            'status' => 'required|string|in:on,off',
+        ]);
+
+        $row = Article::query()->find($id);
+
+        if(empty($row)){
+            abort(404);
+        }
+
+        $params = $request->all();
+
+        $params['last_member_id'] = \Auth::id();
+
+        $params['is_original'] = str_replace(['on', 'off'], [1,0], $params['is_original']);
+        $params['is_draft'] = str_replace(['on', 'off'], [1,0], $params['is_draft']);
+        $params['status'] = str_replace(['on', 'off'], [1,0], $params['status']);
+
+        $id = $row->update($params);
+        if($id){
+            $row->tags()->sync($params['tags']);
+            return redirect()->route('article.index');
+        }else{
+            return back()->withErrors(['msg' => '编辑失败']);
+        }
     }
 
     public function destroy($id)

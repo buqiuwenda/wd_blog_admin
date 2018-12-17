@@ -31,5 +31,8 @@ class Discussion  extends Model
     ];
 
 
-
+    public function comments()
+    {
+        return $this->morphMan(Comment::class, 'commentable');
+    }
 }

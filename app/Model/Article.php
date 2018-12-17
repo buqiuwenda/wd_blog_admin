@@ -84,4 +84,9 @@ class Article  extends Model
         $this->attributes['content'] = json_encode($content);
     }
 
+    public function comments()
+    {
+        return $this->morphMan(Comment::class, 'commentable');
+    }
+
 }

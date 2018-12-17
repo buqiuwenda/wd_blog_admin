@@ -25,37 +25,25 @@
                 </div>
                 @include('errors.error')
                 <div class="ibox-content">
-                    <form method="post" class="form-horizontal" action="{{ route('article.update', $row) }}" enctype="multipart/form-data">
-                        {{ method_field('put') }}
-                        @csrf
-                        <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
-                            <label class="col-sm-2 control-label">标题 <small class="text-danger">[*]</small></label>
+                    <form method="post" class="form-horizontal" >
+
+                        <div class="form-group ">
+                            <label class="col-sm-2 control-label">标题 </label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="title" placeholder="" value="@if(old('title')) {{ old('title') }} @else {{ $row->title }} @endif" maxlength="255">
+                                <p class="form-control-static">{{ $row->title }}</p>
                             </div>
 
-                            @if ($errors->has('title'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('title') }}</strong>
-                                </span>
-                            @endif
                         </div>
 
 
-                        <div class="form-group {{ $errors->has('subtitle') ? 'has-error' : '' }}">
-                            <label class="col-sm-2 control-label">子标题 <small class="text-danger">[*]</small></label>
+                        <div class="form-group ">
+                            <label class="col-sm-2 control-label">子标题 </label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="subtitle" placeholder="子标题" value="@if(old('title')) {{ old('subtitle') }} @else {{ $row->subtitle }}  @endif" maxlength="255">
+                               <p class="form-control-static">{{ $row->subtitle }}</p>
                             </div>
-
-                            @if ($errors->has('subtitle'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('subtitle') }}</strong>
-                                </span>
-                            @endif
                         </div>
-                        <div class="form-group {{ $errors->has('category_id') ? 'has-error' : '' }}">
-                            <label class="col-sm-2 control-label">文章类别 <small class="text-danger">[*]</small></label>
+                        <div class="form-group ">
+                            <label class="col-sm-2 control-label">文章类别 </label>
                             <div class="col-sm-6">
                                 <select name="category_id" class="form-control m-b">
                                     <option value="">请选择</option>
@@ -68,12 +56,6 @@
                                     @endif
                                 </select>
                             </div>
-
-                            @if ($errors->has('category_id'))
-                                <span class="help-block">
-                                <strong>{{ $errors->first('category_id') }}</strong>
-                            </span>
-                            @endif
                         </div>
 
                         <div class="form-group" >
@@ -83,33 +65,26 @@
                                     <input name="image"  id="image" type="file">
                                 </div>
                                 <div id="errorBlock" class="help-block"></div>
-                                <input type="hidden" id="page_image" name="page_image" value="{{ $row->page_image }}">
                             </div>
                         </div>
 
-                        <div class="form-group {{ $errors->has('meta_description') ? 'has-error' : '' }}">
-                            <label class="col-sm-2 control-label"> 简述 <small class="text-danger">[*]</small></label>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label"> 简述 </label>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control" name="meta_description" placeholder="描述" value="@if(old('meta_description')) {{ old('meta_description') }} @else {{ $row->meta_description }} @endif" maxlength="255">
+                               <p class="form-control-static">{{ $row->meta_description }}</p>
                             </div>
-
-                            @if ($errors->has('meta_description'))
-                                <span class="help-block">
-                                    <strong>{{ $errors->first('meta_description') }}</strong>
-                                </span>
-                            @endif
                         </div>
 
                         <div class="hr-line-dashed"></div>
                         <div class="form-group ">
-                            <label class="col-sm-2 control-label"> 文章内容<small class="text-danger">[*]</small> </label>
+                            <label class="col-sm-2 control-label"> 文章内容 </label>
                             <div class="col-sm-8">
                                 <textarea name="content"  data-provide="markdown" rows="10">{{ $content }}</textarea>
                             </div>
 
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">标签 <small class="text-danger">[*]</small></label>
+                            <label class="col-sm-2 control-label">标签 </label>
                             <div class="col-sm-6">
                                 <select class="select2_tag form-control" name="tags[]" multiple="multiple" >
                                     @if($tags)
@@ -122,7 +97,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">发布时间 <small class="text-danger">[*]</small></label>
+                            <label class="col-sm-2 control-label">发布时间 </label>
                             <div class="col-sm-4">
                                 <div class="input-group date ">
                                     <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="published_at" class="form-control" value="@if(old('published_at')) {{ old('published_at') }}  @else {{ $row->published_at }} @endif">
@@ -130,16 +105,16 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">是否原创 <small class="text-danger">[*]</small></label>
+                            <label class="col-sm-2 control-label">是否原创 </label>
                             <div class="col-sm-2">
                                 <input type="checkbox" name="is_original" class="js-switch"  @if($row->is_original) checked @endif />
                             </div>
-                            <label class="col-sm-2 control-label">是否草稿 <small class="text-danger">[*]</small></label>
+                            <label class="col-sm-2 control-label">是否草稿 </label>
                             <div class="col-sm-2">
                                 <input type="checkbox" name="is_draft" class="js-switch2"  @if($row->is_draft) checked @endif  />
                             </div>
 
-                            <label class="col-sm-1 control-label">状态 <small class="text-danger">[*]</small></label>
+                            <label class="col-sm-1 control-label">状态 </label>
                             <div class="col-sm-2">
                                 <input type="checkbox" name="status" class="js-switch3"   @if($row->status) checked @endif />
                             </div>
@@ -147,10 +122,22 @@
 
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
-                            <div class="col-sm-4 col-sm-offset-2">
-                                <button class="btn btn-white" type="button" onclick="history.back()"><i class="fa fa-mail-reply"></i> 取消</button>
-                                <button class="btn btn-primary" type="submit"><i class="fa fa-cloud-upload"></i> 保存</button>
+                            <label class="col-sm-2 control-label">创建时间</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static">{{ $row->created_at }}</p>
+                            </div>
+                        </div>
 
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">更新时间</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static">{{ $row->updated_at }}</p>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+                                <a class="btn btn-primary" href="{{ route('article.edit', $row) }}"><i class="fa fa-edit"></i> 编辑</a>
                             </div>
                         </div>
                     </form>
@@ -184,9 +171,6 @@
             });
 
 
-            var uploadUrl = "{{ route('image.upload') }}";
-            var deleteUrl = "{{ route('file.delete') }}";
-            var fileKey = "{{ $row->page_image }}";
 
             var fileInfo = '<?php echo $fileInfo; ?>';
             if(fileInfo) {
@@ -198,28 +182,26 @@
             $("#image").fileinput({
                 'language':'zh',
                 'theme': 'explorer-fas',
-                'uploadUrl': uploadUrl,
+                'uploadUrl': '#',
                 'allowedFileExtensions': ['jpeg','jpg', 'png', 'gif'],
                 'elErrorContainer': '#errorBlock',
                 maxFileSize: 2048,
                 maxFilesNum: 1,
+                showUpload:false,
                 overwriteInitial: false,
                 initialPreviewAsData:true,
                 initialPreview: [
                     fileInfoJson.url
                 ],
                 initialPreviewConfig: [
-                    {caption: fileInfoJson.name, size: fileInfoJson.fsize, width: "120px", url: deleteUrl, key: 1}
+                    {caption: fileInfoJson.name, size: fileInfoJson.fsize, width: "120px", url: fileInfoJson.url, key: 1}
                 ],
-                deleteExtraData:{ 'key':fileKey}
+                layoutTemplates: {
+                    'actionDelete':'',
+                    'actionUpload':''
+                }
 
 
-            }).on('fileuploaded',function(event,data, previewId, index){
-                 var response = data.response;
-                 if(response) {
-                    $("#page_image").val(response.real_path);
-
-                 }
             });
 
             $("#some-textarea").markdown({

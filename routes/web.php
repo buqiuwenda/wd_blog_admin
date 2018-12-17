@@ -110,5 +110,11 @@ Route::group([
         Route::put('articles/{id}','ArticleController@update')->name('article.update');
     });
 
+    // 评论管理
+    Route::group(['namespace' => 'Article'], function(){
+        Route::get('comments', 'CommentController@index')->name('comment.index');
+        Route::get('comments/{id}', 'CommentController@show')->name('comment.show');
+    });
+
 });
 
