@@ -30,9 +30,23 @@ return [
     ],
 
     'stripe' => [
-        'model' => App\Member::class,
+        'model' => App\Model\Member::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+
+    'youdao' => [
+        'domain' => 'http://openapi.youdao.com/api',
+        'app_key' =>  env('YOUDAO_ID', ''),
+        'app_secret' => env('YOUDAO_KEY', ''),
+        'timeout'   => 5,
+    ],
+
+    'qiniu' => [
+        'domain' => env('QINIU_DOMAIN', 'https://qncdn.buqiuwenda.com'),
+        'access_key' => env('QINIU_ACCESS_KEY', ''),
+        'secret_key' => env('QINIU_SECRET_KEY', ''),
+        'bucket'  => env('QINIU_BUCKET', '')
+    ]
 
 ];

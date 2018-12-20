@@ -21,7 +21,7 @@
 
         <br/>
 
-        <a href="{{ route('home::dashboard.show') }}" class="btn btn-primary m-t">返回主页</a>
+        <a href="{{ route('home') }}" class="btn btn-primary m-t">返回主页</a>
     </div>
 
 
