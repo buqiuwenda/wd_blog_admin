@@ -14,6 +14,9 @@ use App\Model\Comment;
 
 class CommentController extends ResetController
 {
+    protected $commentType = [
+       'articles' => '文章'
+    ];
 
     public function index(Request $request)
     {
@@ -25,12 +28,13 @@ class CommentController extends ResetController
         }
 
         $limit = !empty($request->get('limit')) ? $request->get('limit') : 25;
-        $rows = $query->with('user')->orderBy('id', 'desc')->paginate($limit);
+        $rows = $query->with('user','commentable')->orderBy('id', 'desc')->paginate($limit);
         $rows = $rows->appends($request->toArray());
 
         return view('comment.index')->with(['rows' => $rows,
                                             'pageSizes' => $this->pageSizes,
                                             'status' => $this->status,
+                                            'commentTypes' => $this->commentType
                                              ]);
     }
 

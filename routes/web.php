@@ -108,6 +108,9 @@ Route::group([
         Route::get('articles/{id}', 'ArticleController@show')->name('article.show');
         Route::get('articles/{id}/edit', 'ArticleController@edit')->name('article.edit');
         Route::put('articles/{id}','ArticleController@update')->name('article.update');
+
+
+        Route::get('visitors', 'VisitorController@index')->name('visitor.index');
     });
 
     // 评论管理

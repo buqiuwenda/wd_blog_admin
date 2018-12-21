@@ -7,7 +7,7 @@
 
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>评论列表 </h5>
+                    <h5>访问列表 </h5>
                     <div class="ibox-tools">
 
                         分页: {{ $rows->perPage() }} / {{ $rows->lastPage() }} / {{ $rows->currentPage() }} 总计: {{ $rows->total() }}
@@ -28,10 +28,10 @@
 
                                 <div class="col-sm-3">
 
-                                    <select class="form-control m-b input-sm"  name="commentable_type" >
-                                        <option value="">类型</option>
-                                        @foreach($commentTypes as $key=>$val)
-                                            <option value="{{$val}}" @if(request('commentable_type') == $val) selected @endif> {{$val}}</option>
+                                    <select class="form-control m-b input-sm"  name="article_id" >
+                                        <option value="">文章标题</option>
+                                        @foreach($articles as $article)
+                                            <option value="{{$article->id}}" @if(request('article_id') == $article->id) selected @endif> {{$article->title}}</option>
                                         @endforeach
                                     </select>
 
@@ -46,13 +46,11 @@
                             <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>用户名</th>
-                                <th>评论标题</th>
-                                <th>评论内容</th>
-                                <th>评论类型</th>
+                                <th>文章标题</th>
+                                <th>IP</th>
+                                <th>访问用户</th>
+                                <th>点击次数</th>
                                 <th>创建时间</th>
-                                <th>更新时间</th>
-                                <th class="text-right">操作</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -62,16 +60,16 @@
                                         {{ $row->id }}
                                     </td>
                                     <td>
-                                        {{ $row->user->name }}
+                                        {{ $row->article->title }}
                                     </td>
                                     <td>
-                                       {{ $row->commentable->title }}
+                                       {{ $row->ip }}
                                     </td>
                                     <td>
-                                        {{ $row->content }}
+                                        @if($row->user_id) {{ $row->user->name }}  @else 游客 @endif
                                     </td>
                                     <td>
-                                        {{ $commentTypes[$row->commentable_type] }}
+                                        {{ $row->clicks }}
                                     </td>
 
                                     <td>
@@ -79,11 +77,6 @@
                                     </td>
                                     <td>
                                         {{ $row->updated_at }}
-                                    </td>
-                                    <td class="text-right">
-                                        <div class="btn-group">
-                                            <a class="btn-white btn btn-xs" href="{{ route('comment.show', $row) }}"><i class="fa fa-eye"></i> 查看</a>
-                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
