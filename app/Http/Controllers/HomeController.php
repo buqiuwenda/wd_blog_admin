@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Services\RedisService;
+use App\Services\StatisticService;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,35 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $key = 'admin_statistic_data';
+
+        $redisServices = new RedisService();
+
+        $list = $redisServices->getRedis($key);
+        if($list){
+            $list = json_decode($list, true);
+        }else{
+            $statisticService = new StatisticService();
+
+            $user = $statisticService->getUserMonthly();
+            $article = $statisticService->getArticleMonthly();
+            $visitor = $statisticService->getArticleVisitorMonthly();
+            $comment = $statisticService->getCommentMonthly();
+
+            $list = [
+               'user' => $user,
+               'article' => $article,
+               'visitor' => $visitor,
+               'comment' => $comment
+            ];
+
+            $redisServices->setexRedis($key, json_encode($list), 600);
+        }
+
+
+
+        return view('home', compact('list'));
     }
+
+
 }
