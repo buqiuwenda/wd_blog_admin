@@ -5,6 +5,7 @@
  * Date: 2018/11/30 4:37 PM
  */
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Route;
 
 if(!function_exists('is_white_route')){
     function is_white_route($route){
@@ -92,3 +93,59 @@ if (! function_exists('str_random')) {
         return Str::random($length);
     }
 }
+
+/**
+ * 当前路由名称
+ */
+if(!function_exists('route_name')){
+
+    function route_name(){
+        return Route::currentRouteName();
+    }
+}
+
+/**
+ * 当前使用的命名空间位置，相对于Controllers
+ */
+if(!function_exists('current_namespace')){
+    function current_namespace(){
+        $namespace = Route::current()->action['namespace'];
+        $arr = explode('\\', $namespace);
+        if(isset($arr[3])){
+            return $arr[3];
+        }
+        return '';
+    }
+}
+
+if(!function_exists('get_precentage')){
+    function get_precentage($start_num, $end_num)
+    {
+        $is_up = true;
+        if($start_num){
+            $num = $start_num-$end_num;
+            if( $num== 0){
+                $precentage = 0;
+            }elseif($num > 0){
+                $precentage = round(($num/$start_num), 2) * 100;
+            }else{
+                $precentage = round((abs($num)/$start_num), 2) * 100;
+                $is_up = false;
+            }
+
+        }else{
+            if($end_num){
+                $precentage = $end_num;
+                $is_up = false;
+            }else{
+                $precentage = 0;
+            }
+        }
+
+        return [
+            'is_up' => $is_up,
+            'precentage' => $precentage
+        ];
+    }
+}
+

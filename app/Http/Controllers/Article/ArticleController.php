@@ -103,9 +103,9 @@ class ArticleController extends  ResetController
            'content' => 'required|string',
            'tags' => 'required',
            'published_at' => 'required|date',
-           'is_original' => 'required|string|in:on,off',
-           'is_draft' => 'required|string|in:on,off',
-           'status' => 'required|string|in:on,off',
+           'is_original' => 'string|in:on,off',
+           'is_draft' => 'string|in:on,off',
+           'status' => 'string|in:on,off',
        ]);
 
        $params = $request->all();
@@ -113,9 +113,23 @@ class ArticleController extends  ResetController
        $params['member_id'] = \Auth::id();
        $params['last_member_id'] = \Auth::id();
 
-       $params['is_original'] = str_replace(['on', 'off'], [1,0], $params['is_original']);
-       $params['is_draft'] = str_replace(['on', 'off'], [1,0], $params['is_draft']);
-       $params['status'] = str_replace(['on', 'off'], [1,0], $params['status']);
+       if(!empty($params['is_original'])) {
+           $params['is_original'] = str_replace(['on', 'off'], [1, 0], $params['is_original']);
+       }else{
+           $params['is_original'] = 0;
+       }
+
+       if(!empty($params['is_draft'])) {
+           $params['is_draft'] = str_replace(['on', 'off'], [1, 0], $params['is_draft']);
+       }else{
+           $params['is_draft']= 0;
+       }
+
+       if(!empty($params['status'])) {
+           $params['status'] = str_replace(['on', 'off'], [1, 0], $params['status']);
+       }else{
+           $params['status'] =0;
+       }
 
        $model = new Article();
        $model->fill($params);
@@ -183,9 +197,9 @@ class ArticleController extends  ResetController
             'content' => 'required|string',
             'tags' => 'required',
             'published_at' => 'required|date',
-            'is_original' => 'required|string|in:on,off',
-            'is_draft' => 'required|string|in:on,off',
-            'status' => 'required|string|in:on,off',
+            'is_original' => 'string|in:on,off',
+            'is_draft' => 'string|in:on,off',
+            'status' => 'string|in:on,off',
         ]);
 
         $row = Article::query()->find($id);
@@ -198,9 +212,24 @@ class ArticleController extends  ResetController
 
         $params['last_member_id'] = \Auth::id();
 
-        $params['is_original'] = str_replace(['on', 'off'], [1,0], $params['is_original']);
-        $params['is_draft'] = str_replace(['on', 'off'], [1,0], $params['is_draft']);
-        $params['status'] = str_replace(['on', 'off'], [1,0], $params['status']);
+        if(!empty($params['is_original'])) {
+            $params['is_original'] = str_replace(['on', 'off'], [1, 0], $params['is_original']);
+        }else{
+            $params['is_original'] = 0;
+        }
+
+        if(!empty($params['is_draft'])) {
+            $params['is_draft'] = str_replace(['on', 'off'], [1, 0], $params['is_draft']);
+        }else{
+            $params['is_draft']= 0;
+        }
+
+        if(!empty($params['status'])) {
+            $params['status'] = str_replace(['on', 'off'], [1, 0], $params['status']);
+        }else{
+            $params['status'] =0;
+        }
+
 
         $id = $row->update($params);
         if($id){

@@ -8,11 +8,10 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ArticleVisitor  extends Model
 {
-    use SoftDeletes;
+
 
     protected $table = 'article_visitors';
 
@@ -26,6 +25,9 @@ class ArticleVisitor  extends Model
 
     ];
 
-
+    public function article()
+    {
+        return $this->belongsTo(Article::class);
+    }
 
 }
