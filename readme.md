@@ -6,11 +6,23 @@ This is a powerful blog, I try to build the blog more beautiful, more convenient
 
 I believe it will be better and better. If you are interested in this, you can join and enjoy it.
 
+[Example](https://admin.buqiuwenda.com)
+
 ## Basic Features
   
 - rbac 权限系统
+- 文章管理
+- 评论管理
+- 访问管理
+- 系统管理
+- 标签管理
+- 类别管理
 
+## Preview
 
+![WenDa Blog](https://qncdn.buqiuwenda.com/admin-index.png)
+
+![WenDa Blog](https://qncdn.buqiuwenda.com/admin-article.png)
 
 ## Install
 
@@ -26,17 +38,21 @@ I believe it will be better and better. If you are interested in this, you can j
 
 - [WenDa](http://github.com/buqiuwenda)
 
+## Thanks
+
+- [Laravist](https://www.laravist.com/)
+- [Laravel - China](https://laravel-china.org/)
+
 
 ## Server Requirements
 
 - PHP >= 7.1.0
-- OpenSSL PHP Extension
-- PDO PHP Extension
-- Mbstring PHP Extension
-- Tokenizer PHP Extension
-- XML PHP Extension
-- Mysql 5.7
-- Nginx 1.10.13
+- Mysql = 5.7
+- Nginx >= 1.8.1
+- Laravel = 5.6
+- Bootstrap = 3.4
+- Centos = 7.0
+- Redis - 3.6
 
 ## License
 
