@@ -15,7 +15,7 @@
                 </div>
                 <div class="ibox-content">
                     <div class="row">
-                            <form action="{{ route('comment.index') }}" method="get">
+                            <form action="{{ route('visitor.index') }}" method="get">
                                 <div class="col-sm-2">
 
                                     <select class="form-control m-b input-sm"  name="limit" >
@@ -35,6 +35,13 @@
                                         @endforeach
                                     </select>
 
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索</button>
+                                        </span>
+                                    </div>
                                 </div>
 
                             </form>

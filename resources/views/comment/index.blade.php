@@ -36,6 +36,13 @@
                                     </select>
 
                                 </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索</button>
+                                        </span>
+                                    </div>
+                                </div>
 
                             </form>
 
