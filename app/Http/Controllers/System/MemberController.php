@@ -72,7 +72,7 @@ class MemberController extends ResetController
 
         $data = $request->all();
 
-        $id = Member::create([
+        $model = Member::create([
                                  'name' => $data['name'],
                                  'email' => $data['email'],
                                  'nickname' => $data['nickname'],
@@ -81,11 +81,10 @@ class MemberController extends ResetController
                                  'status' => $data['status']
                              ]);
 
-        if(!$id){
+        if(!$model){
             return back()->withErrors(['msg' => '创建失败']);
         }else{
             if(!empty($data['role_id'])){
-                $model = Member::find($id);
                 $model->roles()->sync([$data['role_id']]);
             }
         }

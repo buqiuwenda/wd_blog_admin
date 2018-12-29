@@ -6,7 +6,7 @@ This is a powerful blog, I try to build the blog more beautiful, more convenient
 
 I believe it will be better and better. If you are interested in this, you can join and enjoy it.
 
-[Example](https://admin.buqiuwenda.com)
+[Example](https://admin.buqiuwenda.com) 账号：`youke@qq.com` 密码：`abc123456`
 
 ## Basic Features
   
