@@ -35,6 +35,8 @@ class HttpClient
 
     protected $debug = false;
 
+    protected $method = 'post';
+
     public function __construct($url)
     {
         $this->url = $url;
@@ -92,7 +94,10 @@ class HttpClient
         return $this;
     }
 
-
+    public function setMethod($method)
+    {
+        $this->method = $method;
+    }
     /**
      * 设置代理
      * @param $proxyServer
@@ -181,12 +186,17 @@ class HttpClient
 
 
         $curl = curl_init();  // 启动一个CURL会话
-        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);// 请求头
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $body);   // 请求体
+        if($this->method == 'post') {
+            curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);// 请求头
+            curl_setopt($curl, CURLOPT_POSTFIELDS, $body);   // 请求体
+        }
         curl_setopt($curl, CURLOPT_URL, $this->url);     // 请求地址
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);          // 对认证证书来源的检查
         curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);          // 从证书中检查SSL加密算法是否存在
-        curl_setopt($curl, CURLOPT_POST, true); // 发送一个常规的Post请求
+
+        if($this->method == 'post') {
+            curl_setopt($curl, CURLOPT_POST, true); // 发送一个常规的Post请求
+        }
 
         curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $this->timeout); // 设置响应超时
         curl_setopt($curl, CURLOPT_TIMEOUT, $this->timeout); // 设置传输超时

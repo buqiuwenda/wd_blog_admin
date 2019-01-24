@@ -55,6 +55,8 @@
                                 <th>ID</th>
                                 <th>文章标题</th>
                                 <th>IP</th>
+                                <th>地区</th>
+                                <th>运营商</th>
                                 <th>访问用户</th>
                                 <th>点击次数</th>
                                 <th>创建时间</th>
@@ -71,6 +73,14 @@
                                     </td>
                                     <td>
                                        {{ $row->ip }}
+                                    </td>
+                                    <td>
+                                       {{ $row->country }}
+                                        @if($row->province)  -{{$row->province}} @endif
+                                        @if($row->city)  -{{$row->city}} @endif
+                                    </td>
+                                    <td>
+                                        {{ $row->isp }}
                                     </td>
                                     <td>
                                         @if($row->user_id) {{ $row->user->name }}  @else 游客 @endif

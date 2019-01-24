@@ -57,6 +57,7 @@
                     <li><a href="{{ route('menu.index') }}">菜单管理</a></li>
                     <li><a href="{{ route('role.index') }}">角色管理</a></li>
                     <li><a href="{{ route('node.index') }}">节点管理</a></li>
+                    <li><a href="{{ route('system.index') }}">系统信息</a></li>
                 </ul>
             </li>
         </ul>

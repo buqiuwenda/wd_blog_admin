@@ -66,6 +66,9 @@ Route::group([
         Route::put('roles/{id}','RoleController@update')->name('role.update');
 //        Route::delete('roles/{id}', 'RoleController@destroy')->name('role.destroy');
 
+
+        Route::get('systems', 'SystemController@getSystemInfo')->name('system.index');
+
     });
 
     // 标签管理

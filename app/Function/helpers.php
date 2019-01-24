@@ -149,3 +149,16 @@ if(!function_exists('get_precentage')){
     }
 }
 
+
+if(!function_exists('check_ip')){
+    function check_ip($ip){
+       if(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE)){
+           return true;
+       }elseif($ip == '127.0.0.1'){
+           return false;
+       }
+
+        return false;
+    }
+}
+
