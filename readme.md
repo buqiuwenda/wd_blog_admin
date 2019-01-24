@@ -52,7 +52,7 @@ I believe it will be better and better. If you are interested in this, you can j
 - Laravel = 5.6
 - Bootstrap = 3.4
 - Centos = 7.0
-- Redis - 3.6
+- Redis = 3.6
 
 ## License
 

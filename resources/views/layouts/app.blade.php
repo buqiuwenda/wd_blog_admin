@@ -41,7 +41,7 @@
                 10GB of <strong>250GB</strong> Free.
             </div>
             <div>
-                <strong>Copyright</strong> Example Company &copy; 2018
+                <strong>Copyright</strong> Example Company &copy; {{date('Y')}}
             </div>
         </div>
     </div>
