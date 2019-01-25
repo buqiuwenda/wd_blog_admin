@@ -27,7 +27,6 @@
                                 </div>
 
                                 <div class="col-sm-3">
-
                                     <select class="form-control m-b input-sm"  name="article_id" >
                                         <option value="">文章标题</option>
                                         @foreach($articles as $article)
@@ -36,8 +35,9 @@
                                     </select>
 
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <div class="input-group">
+                                        <input type="text" placeholder="IP" class="input-sm form-control" name="ip" value="{{ request('ip') }}">
                                         <span class="input-group-btn">
                                             <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-search"></i> 搜索</button>
                                         </span>
@@ -75,12 +75,21 @@
                                        {{ $row->ip }}
                                     </td>
                                     <td>
-                                       {{ $row->country }}
-                                        @if($row->province)  -{{$row->province}} @endif
-                                        @if($row->city)  -{{$row->city}} @endif
+                                        @if($ip_data && $row->ip != '127.0.0.1')
+                                            {{ $ip_data[$row->ip]['country'] }}
+                                            @if(!empty($ip_data[$row->ip]['province']))  -{{$ip_data[$row->ip]['province']}} @endif
+                                            @if(!empty($ip_data[$row->ip]['city']))  -{{$ip_data[$row->ip]['city']}} @endif
+                                        @else
+                                            本地IP
+                                        @endif
+
                                     </td>
                                     <td>
-                                        {{ $row->isp }}
+                                        @if($ip_data && $row->ip != '127.0.0.1')
+                                            @if(!empty($ip_data[$row->ip]['isp'])) {{$ip_data[$row->ip]['isp']}} @else 未知 @endif
+                                        @else
+                                          未知
+                                        @endif
                                     </td>
                                     <td>
                                         @if($row->user_id) {{ $row->user->name }}  @else 游客 @endif
@@ -91,9 +100,6 @@
 
                                     <td>
                                         {{ $row->created_at }}
-                                    </td>
-                                    <td>
-                                        {{ $row->updated_at }}
                                     </td>
                                 </tr>
                             @endforeach

@@ -41,13 +41,14 @@ class CommentController extends ResetController
 
     public function show($id)
     {
-        $row  = Comment::query()->with('user')->find($id);
+        $row  = Comment::query()->with('user', 'commentable')->find($id);
 
         if(empty($row)){
             abort(404);
         }
 
         return view('comment.show')->with(['row' => $row,
-                                           'status' => $this->status]);
+                                           'status' => $this->status,
+                                           'commentTypes' => $this->commentType  ]);
     }
 }
