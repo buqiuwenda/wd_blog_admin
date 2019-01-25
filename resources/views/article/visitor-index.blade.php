@@ -75,7 +75,7 @@
                                        {{ $row->ip }}
                                     </td>
                                     <td>
-                                        @if($ip_data && $row->ip != '127.0.0.1')
+                                        @if(!empty($ip_data[$row->ip]) && $row->ip != '127.0.0.1')
                                             {{ $ip_data[$row->ip]['country'] }}
                                             @if(!empty($ip_data[$row->ip]['province']))  -{{$ip_data[$row->ip]['province']}} @endif
                                             @if(!empty($ip_data[$row->ip]['city']))  -{{$ip_data[$row->ip]['city']}} @endif
