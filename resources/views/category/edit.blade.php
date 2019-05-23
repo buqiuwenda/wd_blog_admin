@@ -17,7 +17,7 @@
                 </div>
                 @include('errors.error')
                 <div class="ibox-content">
-                    <form method="post" class="form-horizontal" action="{{ route('category.update') }}">
+                    <form method="post" class="form-horizontal" action="{{ route('category.update', $row) }}">
                         @csrf
                         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             <label class="col-sm-2 control-label">类别名称 <small class="text-danger">[*]</small></label>

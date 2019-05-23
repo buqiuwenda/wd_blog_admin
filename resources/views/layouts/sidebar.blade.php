@@ -42,6 +42,12 @@
                     <li><a href="{{ route('tag.index') }}">标签列表</a></li>
                 </ul>
             </li>
+            <li class="@if(current_namespace() == 'Other')  active @endif">
+                <a href="#"><i class="fa fa-tags"></i> <span class="nav-label">其他管理</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="{{ route('bulletin.index') }}">公告管理</a></li>
+                </ul>
+            </li>
             <li class="@if(current_namespace() == 'Article')  active @endif">
                 <a href="#"><i class="fa fa-book"></i> <span class="nav-label">文章管理</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
@@ -54,7 +60,7 @@
                 <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
                 <ul class="nav nav-second-level collapse">
                     <li><a href="{{ route('member.index') }}">系统用户</a></li>
-                    <li><a href="{{ route('menu.index') }}">菜单管理</a></li>
+                    {{--<li><a href="{{ route('menu.index') }}">菜单管理</a></li>--}}
                     <li><a href="{{ route('role.index') }}">角色管理</a></li>
                     <li><a href="{{ route('node.index') }}">节点管理</a></li>
                     <li><a href="{{ route('system.index') }}">系统信息</a></li>
