@@ -62,6 +62,7 @@
                             <tr>
                                 <th>标题</th>
                                 <th>内容</th>
+                                <th>优先级</th>
                                 <th>添加人</th>
                                 <th>状态</th>
                                 <th>添加时间</th>
@@ -77,6 +78,7 @@
                                     <td>
                                         <textarea name="memo" rows="5"  class="form-control " readonly> {{ $row->context }}</textarea>
                                     </td>
+                                    <td>{{ $row->priority }}</td>
                                     <td>
                                         {{ $row->members->name }}
                                     </td>

@@ -43,6 +43,19 @@
                             @endif
                         </div>
 
+                        <div class="form-group {{ $errors->has('priority') ? 'has-error' : '' }}">
+                            <label class="col-sm-2 control-label">优先级 <small class="text-danger">[*]</small></label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="priority" placeholder="数字越大优先级越高" value="{{ old('priority') }}" maxlength="3">
+                            </div>
+
+                            @if ($errors->has('priority'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('priority') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+
                         <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                             <label class="col-sm-2 control-label">状态 </label>
                             <div class="col-sm-4">

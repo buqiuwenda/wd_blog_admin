@@ -66,7 +66,8 @@ class BulletinController extends ResetController
         $this->validate($request, [
             'title' => 'required|string|max:32',
             'context' => 'required|string',
-            'status' => 'required|in:0,1'
+            'status' => 'required|in:0,1',
+            'priority' => 'required|min:1',
         ]);
 
         $params = $request->toArray();
@@ -103,7 +104,8 @@ class BulletinController extends ResetController
         $this->validate($request, [
             'title' => 'required|string|max:32',
             'context' => 'required|string',
-            'status' => 'required|in:0,1'
+            'status' => 'required|in:0,1',
+            'priority' => 'required|min:1',
         ]);
 
         $row = Bulletin::query()->find($id);
@@ -118,7 +120,8 @@ class BulletinController extends ResetController
             'title' => $params['title'],
             'context' => $params['context'],
             'status' => $params['status'],
-            'last_member_id' => Auth::id()
+            'last_member_id' => Auth::id(),
+            'priority' => $params['priority']
         ];
 
         $id = Bulletin::query()->where('id', '=', $id)->update($data);

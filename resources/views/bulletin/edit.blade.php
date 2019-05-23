@@ -25,7 +25,7 @@
                         <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                             <label class="col-sm-2 control-label">标题 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control" name="title" placeholder="标题，如：公告" value="@if(old('title')) {{ old('title') }} @else {{$row->title}} @endif" maxlength="128">
+                                <input type="text" class="form-control" name="title" placeholder="标题，如：公告" value="@if(old('title')) {{ old('title') }} @else {{$row->title}} @endif" maxlength="32">
                             </div>
                             @if($errors->has('title'))
                                 <span class="help-block">
@@ -35,11 +35,24 @@
                         </div>
 
                         <div class="form-group {{ $errors->has('context') ? 'has-error' : '' }}">
-                            <label class="col-sm-2 control-label">备注 <small class="text-danger">[*]</small> </label>
+                            <label class="col-sm-2 control-label">内容 <small class="text-danger">[*]</small> </label>
                             <div class="col-sm-4"><textarea name="context" rows="5"  class="form-control "> @if(old('context')) {{ old('context') }} @else  {{ $row->context }} @endif</textarea></div>
                             @if ($errors->has('context'))
                                 <span class="help-block">
                                     <strong>{{ $errors->first('context') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <div class="form-group {{ $errors->has('priority') ? 'has-error' : '' }}">
+                            <label class="col-sm-2 control-label">优先级 <small class="text-danger">[*]</small></label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="priority" placeholder="数字越大优先级越高" value="@if(old('priority')) {{ old('priority') }} @else {{ $row->priority }} @endif" maxlength="3">
+                            </div>
+
+                            @if ($errors->has('priority'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('priority') }}</strong>
                                 </span>
                             @endif
                         </div>

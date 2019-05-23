@@ -30,6 +30,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">优先级</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static">{{ $row->priority}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">添加人</label>
                             <div class="col-sm-4">
                                 <p class="form-control-static">{{ $row->members->name}}</p>

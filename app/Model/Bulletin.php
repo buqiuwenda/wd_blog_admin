@@ -18,6 +18,7 @@ class Bulletin  extends Model
         'context',
         'member_id',
         'last_member_id',
+        'priority',
         'status',
         'created_at',
         'updated_at'
