@@ -27,6 +27,16 @@ class VisitorController extends ResetController
        if(!empty($request->get('ip'))){
            $query->where('ip', '=', $request->get('ip'));
        }
+
+       if($request->get('start_time')){
+           $query->where('created_at', '>=',$request->get('start_time').' 00:00:00');
+       }
+
+       if($request->get('end_time')){
+           $query->where('created_at', '<=',$request->get('end_time').' 23:59:59');
+       }
+
+
        $limit = !empty($request->get('limit')) ? $request->get('limit') : 25;
        $rows = $query->orderBy('article_visitors.id', 'desc')->paginate($limit);
        $rows = $rows->appends($request->all());

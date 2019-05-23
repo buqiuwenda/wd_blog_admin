@@ -103,10 +103,6 @@
                 radioClass: 'iradio_square-green'
             });
 
-            if(!window.sessionStorage){
-                alert("浏览器版本过低");
-            }
-
             var url ="{{route('node.treeList')}}";
 
             var setting = {
@@ -114,38 +110,22 @@
                     enable: true,
                     chkStyle: "checkbox",
                     chkDisabledInherit: false,
-                    chkboxType: { "Y": "p", "N": "s" }
-                },
-                callback: {
-                    onCheck: zTreeOnCheck
+                    chkboxType: { "Y": "ps", "N": "ps" }
                 },
                 view: {
                     showIcon: true
                 }
             };
 
-            getDatas();
-            var data = sessionStorage.getItem('ztreeDataShow');
-
-            zTreeObj = $.fn.zTree.init($("#ztree"), setting, JSON.parse(data));
-
-            function zTreeOnCheck(event, treeId, treeNode) {
-
-            }
-            
-            function getDatas() {
-                var node_id = "{{ $node_ids }}";
-
-                 $.get(
-                      url,
-                        {
-                            status:0,
-                            node_id:node_id
-                        },function(data){
-                            sessionStorage.setItem('ztreeDataShow',JSON.stringify(data));
-                        }
-                    );
-            }
+            var node_id = "{{ $node_ids }}";
+            $.get(
+                url,
+                {
+                    node_id:node_id
+                },function(data){
+                    zTreeObj = $.fn.zTree.init($("#ztree"), setting, data);
+                }
+            );
 
         });
     </script>

@@ -116,10 +116,6 @@
                 radioClass: 'iradio_square-green'
             });
 
-            if(!window.sessionStorage){
-                alert("浏览器版本过低");
-            }
-
             var url ="{{route('node.treeList')}}";
 
             var setting = {
@@ -127,7 +123,7 @@
                     enable: true,
                     chkStyle: "checkbox",
                     chkDisabledInherit: false,
-                    chkboxType: { "Y": "p", "N": "s" }
+                    chkboxType: { "Y": "ps", "N": "ps" }
                 },
                 callback: {
                     onCheck: zTreeOnCheck
@@ -137,13 +133,18 @@
                 }
             };
 
-            getDatas();
-            var data = sessionStorage.getItem('ztreeDataEdit');
+            var node_id = "{{ $node_ids }}";
 
-            zTreeObj = $.fn.zTree.init($("#ztree"), setting, JSON.parse(data));
+            $.get(
+                url,
+                {
+                    node_id:node_id
+                },function(data){
+                    zTreeObj = $.fn.zTree.init($("#ztree"), setting, data);
+                }
+            );
 
             function zTreeOnCheck(event, treeId, treeNode) {
-
                 var tId = treeNode.tId;
                 var isParent = treeNode.isParent;
 
@@ -152,67 +153,71 @@
                 if(nodesInput){
                     nodes = new String(nodesInput).split(',');
                 }
-                console.log(nodes);
 
-                var arr = nodesArray();
-                var Str = new String(tId);
-                var id = Str.substr(Str.indexOf('_')+1, Str.length);
-
-                if(isParent !== true){
-                    var nodeId = arr[id];
-                    console.log(nodeId);
-                    if(treeNode.checked === true){
-                        if($.inArray(nodeId, nodes)){
-                            nodes.push(nodeId);
-                        }
-                    }else{
-                        if($.inArray(nodeId, nodes)){
-                            nodes.splice($.inArray(nodeId, nodes),1);
-                        }
-                    }
-                }
-
-                console.log(nodes);
-                $("input[name='nodes']").val(nodes.toString());
-
-            }
-
-            function nodesArray(){
-                var data = sessionStorage.getItem('ztreeDataEdit');
-               data = JSON.parse(data);
                 var arr = new Array();
                 var i =0;
-                $.each(data, function(index, val){
-                    i++;
-                    arr[i] = val.id;
-                    if(val.children){
-                        $.each(val.children,function(io,vo){
+
+                $.get(
+                    url,
+                    {
+                        node_id:node_id
+                    },function(data){
+                        $.each(data, function(index, val){
                             i++;
-                            arr[i] = vo.id;
-                            if(vo.children){
-                                $.each(vo.children, function(u,v){
+                            arr[i] = val.id;
+
+                            if(val.children){
+                                $.each(val.children,function(io,vo){
                                     i++;
-                                    arr[i] = v.id;
+                                    arr[i] = vo.id;
                                 })
                             }
-                        })
-                    }
-                });
-                return arr;
-            }
+                        });
 
-            function getDatas() {
-                var node_id = "{{ $node_ids }}";
+                        var Str = new String(tId);
+                        var id = Str.substr(Str.indexOf('_')+1, Str.length);
 
-                 $.get(
-                      url,
-                        {
-                            status:0,
-                            node_id:node_id
-                        },function(data){
-                            sessionStorage.setItem('ztreeDataEdit',JSON.stringify(data));
+                        var nodeId = arr[id];
+                        if(isParent !== true){
+
+                            if(treeNode.checked === true){
+                                if($.inArray(nodeId, nodes)){
+                                    nodes.push(nodeId);
+                                }
+                            }else{
+                                if($.inArray(nodeId, nodes)){
+                                    nodes.splice($.inArray(nodeId, nodes),1);
+                                }
+                            }
+                        }else{
+
+                            if(treeNode.checked === true){
+                                if($.inArray(nodeId, nodes)){
+                                    $.each(data, function(index, value){
+                                        if(value.id  == nodeId){
+                                            $.each(value.children,function(io,vo){
+                                                nodes.push(vo.id);
+                                            })
+                                        }
+                                    })
+                                }
+                            }else{
+                                if($.inArray(nodeId, nodes)){
+                                    $.each(data, function(index, value){
+                                        if(value.id  == nodeId){
+                                            $.each(value.children,function(io,vo){
+                                                nodes.splice($.inArray(vo.id, nodes),1);
+                                            })
+                                        }
+                                    })
+                                }
+                            }
                         }
-                    );
+
+                        $("input[name='nodes']").val(nodes.toString());
+                    }
+                );
+
             }
 
         });
