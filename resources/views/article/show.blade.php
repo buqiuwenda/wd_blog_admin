@@ -159,7 +159,7 @@
     <script src="{{ asset('js/plugins/bootstrap-markdown/locales/bootstrap-markdown.zh.js') }}"></script>
     <script src="{{ asset('css/plugins/bootstrap-fileinput/themes/explorer-fas/theme.js') }}"></script>
     <script src="{{ asset('js/plugins/switchery/switchery.js') }}"></script>
-    <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('js/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
 
     <script>

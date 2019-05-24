@@ -30,6 +30,7 @@ class HomeController extends Controller
         $redisServices = new RedisService();
 
         $list = $redisServices->getRedis($key);
+
         if($list){
             $list = json_decode($list, true);
         }else{
@@ -39,12 +40,15 @@ class HomeController extends Controller
             $article = $statisticService->getArticleMonthly();
             $visitor = $statisticService->getArticleVisitorMonthly();
             $comment = $statisticService->getCommentMonthly();
+            $sponsor = $statisticService->getSponsorMonthly();
 
             $list = [
                'user' => $user,
                'article' => $article,
                'visitor' => $visitor,
-               'comment' => $comment
+               'comment' => $comment,
+               'sponsor' => $sponsor,
+
             ];
 
             $redisServices->setexRedis($key, json_encode($list), 600);

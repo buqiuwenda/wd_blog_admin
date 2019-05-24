@@ -54,6 +54,19 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-3">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <span class="label label-danger pull-right">@if($list['sponsor']['is_up']) Monthly @else Low value @endif</span>
+                        <h5>赞助总金额</h5>
+                    </div>
+                    <div class="ibox-content">
+                        <h1 class="no-margins">{{ fen_to_yuan($list['sponsor']['total']) }}元</h1>
+                        <div class="stat-percent font-bold text-danger">{{ $list['sponsor']['precentage'] }}% <i class="fa @if($list['sponsor']['is_up']) fa-level-up @else fa-level-down @endif"></i></div>
+                        <small>当月</small>
+                    </div>
+                </div>
+            </div>
         </div>
 
 @endsection

@@ -11,6 +11,7 @@ use App\Model\User;
 use App\Model\Article;
 use App\Model\ArticleVisitor;
 use App\Model\Comment;
+use App\Model\SponsorWater;
 
 class StatisticService
 {
@@ -99,6 +100,26 @@ class StatisticService
         $precentage = get_precentage($comment, $last_comment);
 
         return array_merge($precentage, ['total' => $comment]);
+    }
+
+
+    public function getSponsorMonthly()
+    {
+        $sponsor = SponsorWater::query()->where('created_at','>=', $this->start_date)->where('created_at', '<=', $this->end_date)
+            ->where('status', 1)
+            ->count();
+
+        $last_sponsor = SponsorWater::query()->where('created_at','>=', $this->pre_start_date)->where('created_at', '<=', $this->pre_end_date)
+            ->where('status', 1)
+            ->count();
+
+        $amount = SponsorWater::query()->where('created_at','>=', $this->start_date)->where('created_at', '<=', $this->end_date)
+            ->where('status', 1)
+            ->sum('amount');
+
+        $precentage = get_precentage($sponsor, $last_sponsor);
+
+        return array_merge($precentage, ['total' => $amount , 'num' => $sponsor]);
     }
 
 }
