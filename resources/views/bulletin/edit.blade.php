@@ -13,7 +13,7 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>公告标签 <small> <span class="text-danger">[*]</span>为必填项</small></h5>
+                    <h5>编辑公告 <small> <span class="text-danger">[*]</span>为必填项</small></h5>
                 </div>
                 @include('errors.error')
                 <div class="ibox-content">

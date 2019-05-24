@@ -132,6 +132,14 @@ Route::group([
         Route::put('bulletins/{id}','BulletinController@update')->name('bulletin.update');
         Route::delete('bulletins/{id}', 'BulletinController@destroy')->name('bulletin.destroy');
 
+        Route::get('sponsor_waters', 'SponsorWaterController@index')->name('sponsor_water.index');
+        Route::get('sponsor_waters/create', 'SponsorWaterController@create')->name('sponsor_water.create');
+        Route::post('sponsor_waters', 'SponsorWaterController@store')->name('sponsor_water.store');
+        Route::get('sponsor_waters/{id}', 'SponsorWaterController@show')->name('sponsor_water.show');
+        Route::get('sponsor_waters/{id}/edit', 'SponsorWaterController@edit')->name('sponsor_water.edit');
+        Route::put('sponsor_waters/{id}','SponsorWaterController@update')->name('sponsor_water.update');
+        Route::delete('sponsor_waters/{id}', 'SponsorWaterController@destroy')->name('sponsor_water.destroy');
+
     });
 
 });

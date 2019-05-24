@@ -34,6 +34,17 @@ class ResetController extends Controller
         ]
     ];
 
+    protected $successStatus = [
+        1 => [
+            'name' => '成功',
+            'class' => 'text-navy',
+        ],
+        0 => [
+            'name' => '失败',
+            'class' => 'text-danger'
+        ]
+    ];
+
     public function __construct()
     {
         $this->middleware('auth');

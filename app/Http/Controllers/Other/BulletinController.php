@@ -1,7 +1,7 @@
 <?php
 /**
- * Class Bulletin
- * @package App\Http\Controllers\Bulletin
+ * Class BulletinController
+ * @package App\Http\Controllers\Other
  * Author:huangzhongxi@rockfintech.com
  * Date: 2019/5/23 2:44 PM
  */
@@ -28,7 +28,7 @@ class BulletinController extends ResetController
         }
 
         if(!empty($request->get('keyword'))){
-            $query->where('tag', 'like', '%'.$request->get('keyword').'%');
+            $query->where('title', 'like', '%'.$request->get('keyword').'%');
         }
 
         $limit = !empty($request->get('limit')) ? $request->get('limit') : 25;
