@@ -122,5 +122,25 @@ Route::group([
         Route::get('comments/{id}', 'CommentController@show')->name('comment.show');
     });
 
+    // 标签管理
+    Route::group(['namespace' => 'Other'],function(){
+        Route::get('bulletins', 'BulletinController@index')->name('bulletin.index');
+        Route::get('bulletins/create', 'BulletinController@create')->name('bulletin.create');
+        Route::post('bulletins', 'BulletinController@store')->name('bulletin.store');
+        Route::get('bulletins/{id}', 'BulletinController@show')->name('bulletin.show');
+        Route::get('bulletins/{id}/edit', 'BulletinController@edit')->name('bulletin.edit');
+        Route::put('bulletins/{id}','BulletinController@update')->name('bulletin.update');
+        Route::delete('bulletins/{id}', 'BulletinController@destroy')->name('bulletin.destroy');
+
+        Route::get('sponsor_waters', 'SponsorWaterController@index')->name('sponsor_water.index');
+        Route::get('sponsor_waters/create', 'SponsorWaterController@create')->name('sponsor_water.create');
+        Route::post('sponsor_waters', 'SponsorWaterController@store')->name('sponsor_water.store');
+        Route::get('sponsor_waters/{id}', 'SponsorWaterController@show')->name('sponsor_water.show');
+        Route::get('sponsor_waters/{id}/edit', 'SponsorWaterController@edit')->name('sponsor_water.edit');
+        Route::put('sponsor_waters/{id}','SponsorWaterController@update')->name('sponsor_water.update');
+        Route::delete('sponsor_waters/{id}', 'SponsorWaterController@destroy')->name('sponsor_water.destroy');
+
+    });
+
 });
 

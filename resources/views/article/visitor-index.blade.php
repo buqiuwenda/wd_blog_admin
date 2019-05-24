@@ -1,5 +1,11 @@
 @extends('layouts.app')
 
+@section('header')
+
+    <link href="{{ asset('css/plugins/datepicker/datepicker3.css') }}" rel="stylesheet">
+
+@endsection
+
 @section('content')
 
     <div class="row">
@@ -26,7 +32,7 @@
 
                                 </div>
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <select class="form-control m-b input-sm"  name="article_id" >
                                         <option value="">文章标题</option>
                                         @foreach($articles as $article)
@@ -34,6 +40,14 @@
                                         @endforeach
                                     </select>
 
+                                </div>
+
+                                <div class="col-sm-3">
+                                    <div class="input-group input-daterange">
+                                        <input type="text" class="form-control"  name="start_time" value="{{ request('start_time') }}" placeholder="开始时间">
+                                        <div class="input-group-addon">to</div>
+                                        <input type="text" class="form-control" name="end_time" value="{{request('end_time')}}" placeholder="结束时间">
+                                    </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="input-group">
@@ -124,5 +138,24 @@
         </div>
 
     </div>
+
+@endsection
+
+@section('footer')
+    <script src="{{ asset('js/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.input-daterange').datepicker({
+                weekStart: 1,
+                todayBtn:  true,
+                autoclose: true,
+                todayHighlight: 1,
+                format: 'yyyy-mm-dd',
+                startDate: '-30d'
+            });
+
+        });
+    </script>
 
 @endsection

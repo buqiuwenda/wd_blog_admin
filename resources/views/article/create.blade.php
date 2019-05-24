@@ -81,6 +81,7 @@
                                 <div class="file-loading">
                                     <input name="image"  id="image" type="file">
                                 </div>
+                                <input id="page_image_hidden" name='page_image' type='hidden' value="">
                                 <div id="errorBlock" class="help-block"></div>
                             </div>
                         </div>
@@ -122,8 +123,9 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">发布时间 <small class="text-danger">[*]</small></label>
                             <div class="col-sm-4">
-                                <div class="input-group date ">
-                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span><input type="text" name="published_at" class="form-control" value="">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                    <input type="text" name="published_at" class="form-control datepicker" data-provide="datepicker" value="">
                                 </div>
                             </div>
                         </div>
@@ -171,7 +173,7 @@
     <script src="{{ asset('js/plugins/bootstrap-markdown/locales/bootstrap-markdown.zh.js') }}"></script>
     <script src="{{ asset('css/plugins/bootstrap-fileinput/themes/explorer-fas/theme.js') }}"></script>
     <script src="{{ asset('js/plugins/switchery/switchery.js') }}"></script>
-    <script src="{{ asset('js/plugins/datapicker/bootstrap-datepicker.js') }}"></script>
+    <script src="{{ asset('js/plugins/datepicker/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
 
     <script>
@@ -196,10 +198,9 @@
 
             }).on('fileuploaded',function(event,data, previewId, index){
                  var response = data.response;
+                 console.log(response);
                  if(response) {
-                     var hiddenInput = "<input name='page_image' type='hidden' value=" + response.real_path + ">";
-
-                     $(this).append(hiddenInput);
+                     $('#page_image_hidden').val(response.real_path);
                  }
             });
 
@@ -211,7 +212,7 @@
                 savable:false
             });
 
-            $('.input-group.date').datepicker({
+            $('.datepicker').datepicker({
                 todayBtn: "linked",
                 keyboardNavigation: false,
                 forceParse: false,

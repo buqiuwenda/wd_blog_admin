@@ -83,8 +83,7 @@ class RoleController extends ResetController
         if(!$id){
             return back()->withErrors(['msg' => '创建失败']);
         }else{
-            $model = Role::find($id);
-           $model->nodes()->sync(array_unique(explode(",",$data['nodes'])));
+           $roles->nodes()->sync(array_unique(explode(",",$data['nodes'])));
         }
 
         return redirect()->route('role.index');

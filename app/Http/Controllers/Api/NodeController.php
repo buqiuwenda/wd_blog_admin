@@ -29,23 +29,15 @@ class NodeController extends Controller
             $node_id = [];
         }
 
-        $tmpDataTwo = [];
-        $menus = Menu::query()->orderBy('parent_id', 'asc')->get();
-
-        if(empty($menus)){
-            return $tmpDataTwo;
-        }
-
-
         if($is_status) {
             $nodes = Node::query()->where('status', '=', 'enable')->orderBy('parent_id', 'asc')->get();
         }else{
             $nodes = Node::query()->orderBy('parent_id', 'asc')->get();
         }
 
-
+        $data = [];
         if($nodes){
-            $data = [];
+
             foreach($nodes->toArray() as $val){
                 if($val['parent_id'] == '0'){
                     $data[$val['id']] = [
@@ -70,40 +62,9 @@ class NodeController extends Controller
                 }
             }
 
-            $tmpData = [];
-            foreach($data as $val){
-                $tmpData[$val['routing']] = $val;
-            }
-
-
-            foreach($menus as $vo){
-                if($vo['parent_id'] == '0'){
-                    $tmpDataTwo[$vo['id']] = [
-                       'id' => $vo['id'],
-                       'name' => $vo['name'],
-                       'routing' => $vo['routing'],
-                       'open' => true,
-                       'children'  => []
-                    ];
-                }else{
-                    if(!empty($tmpData[$vo['routing']])) {
-                        $tmp = $tmpData[$vo['routing']];
-
-                        $tmpDataTwo[$vo['parent_id']]['children'][] = $tmp;
-                    }else{
-                        $tmp = [
-                          'id' => $vo['id'],
-                          'name' => $vo['name'],
-                          'routing' => $vo['routing']
-                        ];
-
-                        $tmpDataTwo[$vo['parent_id']]['children'][] = $tmp;
-                    }
-                }
-            }
 
         }
 
-        return array_values($tmpDataTwo);
+        return array_values($data);
     }
 }

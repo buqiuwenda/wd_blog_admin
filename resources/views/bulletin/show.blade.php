@@ -1,10 +1,8 @@
 @extends('layouts.app')
 
-
 @section('header')
 
     <link href="{{ asset('css/plugins/iCheck/custom.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/zTreeStyle.css') }}" rel="stylesheet">
 
 @endsection
 
@@ -14,43 +12,45 @@
         <div class="col-lg-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>角色信息 <small> <span class="text-danger">[*]</span>为必填项</small></h5>
+                    <h5>公告信息</h5>
                 </div>
                 <div class="ibox-content">
-                    <form method="post" class="form-horizontal" >
+                    <form method="post" class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">角色名称 </label>
+                            <label class="col-sm-2 control-label">标题</label>
                             <div class="col-sm-4">
-                                <p class="form-control-static">{{ $row->name }}</p>
-                            </div>
-
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">角色标识 </label>
-                            <div class="col-sm-4">
-                                <p class="form-control-static">{{ $row->alias }}</p>
-                            </div>
-
-                        </div>
-
-                        <div class="form-group ">
-                            <label class="col-sm-2 control-label">权限节点 <small class="text-danger">[*]</small></label>
-                            <div class="col-sm-4">
-                                <ul id="ztree" class="ztree"></ul>
+                                <p class="form-control-static">{{ $row->title}}</p>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">简述 </label>
+                            <label class="col-sm-2 control-label">内容</label>
                             <div class="col-sm-4">
-                                <textarea rows="5" class="form-control" name="meta_description" >{{ $row->meta_description }}</textarea>
+                                <textarea name="context" rows="5"  class="form-control " readonly> {{ $row->context }}</textarea>
                             </div>
-
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">优先级</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static">{{ $row->priority}}</p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">添加人</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static">{{ $row->members->name}}</p>
+                            </div>
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">状态 </label>
+                            <label class="col-sm-2 control-label">最后修改人</label>
+                            <div class="col-sm-4">
+                                <p class="form-control-static">{{ $row->lastMembers->name}}</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">公告状态</label>
                             <div class="col-sm-4">
                                 <p class="form-control-static">
                                     <span><i class="fa fa-circle {{ $status[$row->status]['class'] }}"></i> {{ $status[$row->status]['name'] }}</span>
@@ -75,12 +75,12 @@
                         </div>
 
                         <div class="hr-line-dashed"></div>
-
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
-                                <a class="btn btn-primary" href="{{ route('role.edit', $row) }}"><i class="fa fa-edit"></i> 编辑</a>
+                                <a class="btn btn-primary" href="{{ route('bulletin.edit', $row) }}"><i class="fa fa-edit"></i> 编辑</a>
                             </div>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -94,39 +94,12 @@
 
     <!-- iCheck -->
     <script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.ztree.core.min.js') }}"></script>
-    <script src="{{ asset('js/jquery.ztree.excheck.min.js') }}"></script>
     <script>
         $(document).ready(function () {
             $('.i-checks').iCheck({
                 checkboxClass: 'icheckbox_square-green',
                 radioClass: 'iradio_square-green'
             });
-
-            var url ="{{route('node.treeList')}}";
-
-            var setting = {
-                check: {
-                    enable: true,
-                    chkStyle: "checkbox",
-                    chkDisabledInherit: false,
-                    chkboxType: { "Y": "ps", "N": "ps" }
-                },
-                view: {
-                    showIcon: true
-                }
-            };
-
-            var node_id = "{{ $node_ids }}";
-            $.get(
-                url,
-                {
-                    node_id:node_id
-                },function(data){
-                    zTreeObj = $.fn.zTree.init($("#ztree"), setting, data);
-                }
-            );
-
         });
     </script>
 

@@ -162,3 +162,17 @@ if(!function_exists('check_ip')){
     }
 }
 
+
+/**
+ * 货币单位分转元
+ */
+if(!function_exists('fen_to_yuan')){
+
+    function fen_to_yuan($fen){
+        if($fen === null){
+            $fen = 0;
+        }
+        $yuan = number_format($fen / 100, 2, '.', '');
+        return $yuan;
+    }
+}
