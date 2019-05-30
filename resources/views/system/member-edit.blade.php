@@ -61,7 +61,7 @@
                                     <option value="">暂无</option>
                                     @if($roles)
                                         @foreach($roles as $role)
-                                            <option @if(old('role_id') == $role->id  || (!empty($row->roles->id) && $row->roles->id == $role->id)) selected @endif value="{{ $role->id }}">{{ $role->name }}</option>
+                                            <option @if(old('role_id') == $role->id  || (!empty($row->roles[0]) && $row->roles[0]->id == $role->id)) selected @endif value="{{ $role->id }}">{{ $role->name }}</option>
                                         @endforeach
                                     @endif
                                 </select>
