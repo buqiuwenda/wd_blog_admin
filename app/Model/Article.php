@@ -51,7 +51,11 @@ class Article  extends Model
 
     public function setTitleAttribute($value)
     {
+        $title = isset($this->attributes['title']) ?? '';
         $this->attributes['title'] = $value;
+        if(!empty($title) && $title == $value){
+            return;
+        }
         $youDao = new YouDao();
         $en_value = $youDao->translate($value);
 
